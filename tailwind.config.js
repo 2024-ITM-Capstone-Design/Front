@@ -1,13 +1,13 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   content: [],
-  darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
       mainColor: "#8D7EFD",
       subColor: "#7165CA",
       black: "#1E1E20",
-      textColor: "#F7F7F7",
+      white: "#F7F7F7",
       gray: "#3D3C41",
       pink: "#F4B5FA",
       mint: "#A6EEF6",
@@ -16,6 +16,7 @@ module.exports = {
     extend: {
       fontFamily: {
         display: ["Pretendard", "sans-serif"],
+        fira: ["Fira Sans Condensed", "sans-serif"],
       },
       fontSize: {
         xl: "32px",

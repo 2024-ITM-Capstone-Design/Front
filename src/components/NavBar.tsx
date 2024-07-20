@@ -41,7 +41,7 @@ function NavBar({ menu }: MenuProps) {
         >
           뮤직팔레트 생성
         </N.Menu>
-        <button className="login-btn" onClick={() => navigate("login")}>
+        <button className="login-btn" onClick={() => navigate("/login")}>
           Login
         </button>
       </N.Container>

@@ -36,6 +36,8 @@ const colors = {
   pink: createColor("#F4B5FA"),
   mint: createColor("#A6EEF6"),
   yellow: createColor("#FFFFB2"),
+  subGray: createColor("#BDC0C4"),
+  error: createColor("#FF5F58"),
 };
 
 export type FontsTypes = typeof fonts;

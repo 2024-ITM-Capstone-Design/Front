@@ -8,16 +8,13 @@ function NavBar() {
     <N.Wrapper>
       <N.Container>
         <span className="logo">SoundPalette</span>
-        <span className="menu">서비스 소개</span>
-        <span className="menu">뮤직팔레트 생성</span>
       </N.Container>
 
       <N.Container>
+        <span className="menu">서비스 소개</span>
+        <span className="menu">뮤직팔레트 생성</span>
         <button className="login-btn" onClick={() => navigate("login")}>
           Login
-        </button>
-        <button className="sign-up-btn" onClick={() => navigate("/sign-up")}>
-          Sign In
         </button>
       </N.Container>
     </N.Wrapper>

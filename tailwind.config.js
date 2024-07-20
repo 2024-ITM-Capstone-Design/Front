@@ -12,6 +12,8 @@ module.exports = {
       pink: "#F4B5FA",
       mint: "#A6EEF6",
       yellow: "#FFFFB2",
+      subGray: "#BDC0C4",
+      error: "#FF5F58",
     },
     extend: {
       fontFamily: {

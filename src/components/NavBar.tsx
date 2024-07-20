@@ -2,17 +2,45 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import * as N from "../styles/navbar.style";
 
-function NavBar() {
+type MenuProps = {
+  menu: string;
+};
+function NavBar({ menu }: MenuProps) {
   const navigate = useNavigate();
   return (
     <N.Wrapper>
       <N.Container>
-        <span className="logo">SoundPalette</span>
+        <span
+          className="logo"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          SoundPalette
+        </span>
       </N.Container>
 
       <N.Container>
-        <span className="menu">서비스 소개</span>
-        <span className="menu">뮤직팔레트 생성</span>
+        <N.Menu
+          className="menu"
+          disabled={menu === "intro"}
+          active={menu === "intro"}
+          onClick={() => {
+            navigate("/intro");
+          }}
+        >
+          서비스 소개
+        </N.Menu>
+        <N.Menu
+          className="menu"
+          onClick={() => {
+            navigate("/create");
+          }}
+          disabled={menu === "create"}
+          active={menu === "create"}
+        >
+          뮤직팔레트 생성
+        </N.Menu>
         <button className="login-btn" onClick={() => navigate("login")}>
           Login
         </button>

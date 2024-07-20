@@ -58,7 +58,13 @@ function Signup() {
   return (
     <>
       <div className="flex flex-col h-screen overflow-hidden max-w-7xl mx-auto">
-        <S.Logo>SoundPalette</S.Logo>
+        <S.Logo
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          SoundPalette
+        </S.Logo>
 
         <S.SignupLayout>
           <span className="sign-up-title">Create Account</span>

@@ -34,7 +34,7 @@ function NavBar({ menu }: MenuProps) {
         <N.Menu
           className="menu"
           onClick={() => {
-            navigate("/create");
+            navigate("/create/file-upload");
           }}
           disabled={menu === "create"}
           active={menu === "create"}

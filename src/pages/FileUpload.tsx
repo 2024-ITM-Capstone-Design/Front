@@ -1,20 +1,31 @@
 import React from "react";
 import CreateLayout from "../components/CreateLayout";
-import Progress from "../components/Create/Progress";
-import * as C from "../styles/create.style";
-import { useNavigate } from "react-router-dom";
-function FileUpload() {
-  const navigate = useNavigate();
+import Progress from "../components/Progress";
 
-  const goToNextPage = () => {
-    navigate("/create/service-selection");
+import { useLocation } from "react-router-dom";
+import SingleForm from "../components/FIleUpload/SingleForm";
+import ManyForm from "../components/FIleUpload/ManyForm";
+function FileUpload() {
+  const location = useLocation();
+
+  const { menu } = location.state;
+  console.log("state", location.state);
+
+  //서비스 선택에 따라 컴포넌트 조건부 렌더링
+  const ViewComponent = ({ menu }: { menu: "one" | "many" | "both" }) => {
+    if (menu === "one") {
+      return <SingleForm menu={menu} />;
+    } else if (menu === "many") {
+      return <ManyForm />;
+    } else {
+      return <SingleForm menu={menu} />;
+    }
   };
   return (
     <CreateLayout>
-      <Progress currentStep={0} />
+      <Progress currentStep={1} />
       <div className="flex flex-col items-end">
-        <C.ContentWrapper></C.ContentWrapper>
-        <C.NextButton onClick={goToNextPage}>Next →</C.NextButton>
+        <ViewComponent menu={menu} />
       </div>
     </CreateLayout>
   );

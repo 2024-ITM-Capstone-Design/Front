@@ -11,6 +11,7 @@ import FileUpload from "./pages/FileUpload";
 import ServiceSelection from "./pages/ServiceSelection";
 import AnalysisResults from "./pages/AnalysisResults";
 import CheckResult from "./pages/CheckResult";
+import CheckLyric from "./pages/CheckLyric";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           path="/create/service-selection"
           element={<ServiceSelection />}
         />
+        <Route path="/create/check-lyric" element={<CheckLyric />} />
         <Route path="/create/analysis-result" element={<AnalysisResults />} />
         <Route path="/create/check-result" element={<CheckResult />} />
       </Routes>

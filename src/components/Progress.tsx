@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import * as P from "../../styles/progress.style";
-import TickIcon from "../../assets/icons/tick-icon";
-import DotIcon from "../../assets/icons/dot";
+import * as P from "../styles/progress.style";
+import TickIcon from "../assets/icons/tick-icon";
+import DotIcon from "../assets/icons/dot";
 
 type ProgressProps = {
   currentStep: number;

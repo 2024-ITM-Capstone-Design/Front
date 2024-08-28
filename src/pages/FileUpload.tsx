@@ -1,10 +1,10 @@
 import React from "react";
 import CreateLayout from "../components/CreateLayout";
-import Progress from "../components/Create/Progress";
-import * as C from "../styles/create.style";
+import Progress from "../components/Progress";
+
 import { useLocation } from "react-router-dom";
-import SingleForm from "../components/Create/SingleForm";
-import ManyForm from "../components/Create/ManyForm";
+import SingleForm from "../components/FIleUpload/SingleForm";
+import ManyForm from "../components/FIleUpload/ManyForm";
 function FileUpload() {
   const location = useLocation();
 

@@ -1,7 +1,7 @@
 import React from "react";
 import CreateLayout from "../components/CreateLayout";
 import * as C from "../styles/create.style";
-import Progress from "../components/Create/Progress";
+import Progress from "../components/Progress";
 import { useNavigate } from "react-router-dom";
 function AnalysisResults() {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CreateLayout from "../components/CreateLayout";
-import Progress from "../components/Create/Progress";
+import Progress from "../components/Progress";
 import * as C from "../styles/create.style";
 import { useNavigate } from "react-router-dom";
 import tw from "twin.macro";

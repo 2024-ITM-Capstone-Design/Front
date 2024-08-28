@@ -61,7 +61,7 @@ function AudioUpload({ file, setFile }: audioProps) {
 
 export default AudioUpload;
 const AudioInput = styled.div`
-  ${tw`w-[355px] h-[250px] border-[1px] border-dashed border-[#F7F7F7] rounded-[4px] flex flex-col items-center justify-center`}
+  ${tw`w-full h-[250px] border-[1px] border-dashed border-[#F7F7F7] rounded-[4px] flex flex-col items-center justify-center`}
   .sub-text {
     ${tw`font-fira font-light text-white my-1`}
   }

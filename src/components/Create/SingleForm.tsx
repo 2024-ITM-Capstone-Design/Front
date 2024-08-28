@@ -10,8 +10,8 @@ import { useNavigate } from "react-router-dom";
 function SingleForm({ menu }: { menu: "one" | "both" }) {
   //파일 상태관리를 위한 state, 파일이 선택되거나 드롭될때 setFile을 통해 상태 업데이트
   const [file, setFile] = useState<File | null>(null);
-  const [title, setTitle] = useState<string>();
-  const [lyric, setLyric] = useState<string>();
+  const [title, setTitle] = useState<string>("");
+  const [lyric, setLyric] = useState<string>("");
 
   const navigate = useNavigate();
   const goToNextPage = () => {
@@ -40,7 +40,7 @@ function SingleForm({ menu }: { menu: "one" | "both" }) {
           </InputBox>
           <C.RowBox className="justify-between">
             <C.ColBox>
-              <InputBox>
+              <InputBox className="w-[355px]">
                 <label className="title-md">🎧 오디오 파일 업로드</label>
                 <label className="text-sm">노래 파일을 업로드해주세요</label>
                 <AudioUpload file={file} setFile={setFile} />
@@ -105,5 +105,5 @@ const InputBox = styled.div`
 `;
 
 const FileBox = styled.div`
-  ${tw`w-[355px] h-[65px] flex flex-row items-center justify-between`}
+  ${tw`w-full h-[65px] flex flex-row items-center justify-between`}
 `;

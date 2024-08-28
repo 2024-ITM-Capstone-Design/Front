@@ -22,10 +22,10 @@ export const StepBar = styled.div`
   .step-box {
     ${tw`flex flex-col`}
     .main-text {
-      ${tw`font-display text-sm text-mainColor`}
+      ${tw`font-display font-medium text-sm text-mainColor`}
     }
     .sub-text {
-      ${tw`font-display text-caption text-subGray`}
+      ${tw`font-display font-light text-caption text-subGray`}
     }
   }
 `;

@@ -22,7 +22,7 @@ function Main() {
           </span>
           <M.NaviButton
             onClick={() => {
-              navigate("/create/file-upload");
+              navigate("/create/service-selection");
             }}
           >
             Create My Music Palette

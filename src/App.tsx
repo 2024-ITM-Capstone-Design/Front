@@ -2,35 +2,50 @@ import React from "react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
 
 import Intro from "./pages/Intro";
-import CreateLayout from "./components/CreateLayout";
 import FileUpload from "./pages/FileUpload";
 import ServiceSelection from "./pages/ServiceSelection";
 import AnalysisResults from "./pages/AnalysisResults";
 import CheckResult from "./pages/CheckResult";
 import CheckLyric from "./pages/CheckLyric";
-
+import OAuth from "./pages/OAuth";
+import MyPage from "./pages/MyPage";
+import { useAuthStore } from "./store/useAuthStore";
+import { Navigate, Outlet } from "react-router-dom";
 function App() {
+  const { isLoggedIn } = useAuthStore();
+
+  //로그인한 회원은 들어갈 수 없는 페이지
+  const PublicRoute = () => {
+    return isLoggedIn ? <Navigate to="/" /> : <Outlet />;
+  };
+
+  //로그인한 회원만 들어갈 수 있는 페이지
+  const PrivateRoute = () => {
+    return isLoggedIn ? <Outlet /> : <Navigate to="/" />;
+  };
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/sign-up" element={<Signup />} />
-
         <Route path="/intro" element={<Intro />} />
 
-        <Route path="/create/file-upload" element={<FileUpload />} />
-        <Route
-          path="/create/service-selection"
-          element={<ServiceSelection />}
-        />
-        <Route path="/create/check-lyric" element={<CheckLyric />} />
-        <Route path="/create/analysis-result" element={<AnalysisResults />} />
-        <Route path="/create/check-result" element={<CheckResult />} />
+        <Route element={<PublicRoute />}>
+          <Route path="/redirect" element={<OAuth />} />
+        </Route>
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/create/file-upload" element={<FileUpload />} />
+          <Route
+            path="/create/service-selection"
+            element={<ServiceSelection />}
+          />
+          <Route path="/create/check-lyric" element={<CheckLyric />} />
+          <Route path="/create/analysis-result" element={<AnalysisResults />} />
+          <Route path="/create/check-result" element={<CheckResult />} />
+          <Route path="/my-page" element={<MyPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

@@ -17,8 +17,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        display: ["Pretendard", "sans-serif"],
-        fira: ["Fira Sans Condensed", "sans-serif"],
+        display: ["Fira Sans Condensed", "sans-serif"],
+        // fira: ["Fira Sans Condensed", "sans-serif"],
       },
       fontSize: {
         xl: "32px",

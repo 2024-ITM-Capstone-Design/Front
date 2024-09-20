@@ -2,23 +2,23 @@ import tw from "twin.macro";
 import styled from "styled-components";
 
 export const MainWrapper = styled.div`
-  ${tw`w-[550px] flex flex-col my-auto`}
+  ${tw`w-[560px] flex flex-col my-auto`}
 
   .main-title {
-    ${tw`font-fira text-7xl text-white mt-40`}
+    ${tw`font-display text-7xl text-white mt-40`}
   }
   .main-exp {
-    ${tw`font-fira text-base text-white mt-6`}
+    ${tw`font-display text-base text-white mt-6`}
   }
   .navi-button {
-    ${tw` w-60 h-10 rounded-lg text-white font-fira mt-10 z-10`}
+    ${tw` w-60 h-10 rounded-lg text-white font-display mt-10 z-10`}
 
     background-color: ${({ theme }) => theme.colors.mainColor};
   }
 `;
 
 export const NaviButton = styled.button`
-  ${tw`w-60 h-10 rounded-lg text-white font-fira mt-10 z-10`}
+  ${tw`w-60 h-10 rounded-lg text-white font-display mt-10 z-10`}
 
   background-color: ${({ theme }) => theme.colors.mainColor};
 

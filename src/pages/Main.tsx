@@ -5,9 +5,11 @@ import { ReactComponent as MainBg } from "../assets/main-bg.svg";
 
 import * as M from "../styles/main.style";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
 
 function Main() {
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuthStore();
   return (
     <>
       <Oval className="absolute top-0" />
@@ -22,7 +24,11 @@ function Main() {
           </span>
           <M.NaviButton
             onClick={() => {
-              navigate("/create/service-selection");
+              if (!isLoggedIn) {
+                alert("Please log in to access this feature.");
+              } else {
+                navigate("/create/service-selection");
+              }
             }}
           >
             Create My Music Palette

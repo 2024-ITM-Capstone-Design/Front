@@ -9,7 +9,7 @@ function CreateLayout({ children }: LayoutProps) {
     <>
       <NavBar menu="create" />
       <div className="max-w-7xl mx-auto flex flex-col items-center">
-        <span className="font-fira text-mainColor text-xl mt-10">
+        <span className="font-fira font-semibold text-mainColor text-xl mt-10">
           Create My Music Palette
         </span>
         {/* <span className="font-display text-white text-sm mt-2">

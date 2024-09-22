@@ -41,9 +41,15 @@ function App() {
             path="/create/service-selection"
             element={<ServiceSelection />}
           />
-          <Route path="/create/check-lyric" element={<CheckLyric />} />
-          <Route path="/create/analysis-result" element={<AnalysisResults />} />
-          <Route path="/create/check-result" element={<CheckResult />} />
+          <Route path="/create/check-lyric/:itemId" element={<CheckLyric />} />
+          <Route
+            path="/create/analysis-result/:itemId"
+            element={<AnalysisResults />}
+          />
+          <Route
+            path="/create/check-result/:itemId"
+            element={<CheckResult />}
+          />
           <Route path="/my-page" element={<MyPage />} />
         </Route>
       </Routes>

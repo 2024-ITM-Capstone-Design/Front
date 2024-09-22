@@ -19,7 +19,7 @@ function ServiceSelection() {
     if (selectedOne && selectedMany) {
       navigate("/create/file-upload", {
         state: {
-          menu: "both",
+          menu: "BOTH",
         },
       });
     }
@@ -27,7 +27,7 @@ function ServiceSelection() {
     else if (selectedOne && !selectedMany) {
       navigate("/create/file-upload", {
         state: {
-          menu: "one",
+          menu: "ONE",
         },
       });
     }
@@ -35,7 +35,7 @@ function ServiceSelection() {
     else if (!selectedOne && selectedMany) {
       navigate("/create/file-upload", {
         state: {
-          menu: "many",
+          menu: "MANY",
         },
       });
     }
@@ -46,9 +46,10 @@ function ServiceSelection() {
       <Progress currentStep={0} />
       <div className="flex flex-col items-end">
         <C.ContentWrapper>
-          <label className="title-md">서비스선택</label>
+          <label className="title-md">Service Selection</label>
           <label className="text-sm">
-            제공받기를 원하는 서비스를 선택해주세요. 복수 선택도 가능해요.
+            Please select the service you want to receive. You can select
+            multiple options.
           </label>
           <C.RowBox className="mt-12 mx-auto w-[650px] justify-between">
             <ButtonWrapper
@@ -56,26 +57,30 @@ function ServiceSelection() {
               onClick={() => setSelectedOne(!selectedOne)}
             >
               <Camera />
-              <label className="title-md my-3">커버 이미지 생성</label>
-              <label className="text-sm">
-                내 음악 맞춤형 커버사진을 생성하고,
-              </label>
-              <label className="text-sm">
-                생성된 이미지를 다운로드할 수 있어요
-              </label>
+              <div className="h-[100px] flex flex-col items-center">
+                <label className="title-md my-2 w-[150px]">
+                  Cover Image Generation
+                </label>
+                <label className="text-sm">Generate a custom cover image</label>
+                <label className="text-sm">
+                  for your music, and download it.
+                </label>
+              </div>
             </ButtonWrapper>
             <ButtonWrapper
               active={selectedMany}
               onClick={() => setSelectedMany(!selectedMany)}
             >
               <Player />
-              <label className="title-md mb-3">구간별 이미지 생성</label>
-              <label className="text-sm">
-                음악의 각 구간에 맞춤형 이미지를 생성하고,
-              </label>
-              <label className="text-sm">
-                다양한 이미지를 다운로드할 수 있어요
-              </label>
+              <div className="h-[100px] flex flex-col items-center">
+                <label className="title-md my-2">
+                  Section-Based Image Generation
+                </label>
+                <label className="text-sm">Generate custom images</label>
+                <label className="text-sm">
+                  for each section of the music{" "}
+                </label>
+              </div>
             </ButtonWrapper>
           </C.RowBox>
         </C.ContentWrapper>

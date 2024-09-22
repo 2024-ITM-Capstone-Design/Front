@@ -63,9 +63,9 @@ export default AudioUpload;
 const AudioInput = styled.div`
   ${tw`w-full h-[250px] border-[1px] border-dashed border-[#F7F7F7] rounded-[4px] flex flex-col items-center justify-center`}
   .sub-text {
-    ${tw`font-fira font-light text-white my-1`}
+    ${tw`font-display font-light text-white my-1`}
   }
   .select-btn {
-    ${tw`w-[135px] h-[39px] bg-subColor rounded font-fira font-light text-white`}
+    ${tw`w-[135px] h-[39px] bg-subColor rounded font-display font-light text-white`}
   }
 `;

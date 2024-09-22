@@ -2,10 +2,10 @@ import React from "react";
 import CreateLayout from "../components/CreateLayout";
 import * as C from "../styles/create.style";
 import Progress from "../components/Progress";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 function AnalysisResults() {
   const navigate = useNavigate();
-
+  const { itemId } = useParams() as { itemId: string };
   const goToNextPage = () => {
     navigate("/create/check-result");
   };

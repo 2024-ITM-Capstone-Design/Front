@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "../components/NavBar";
+import NavBar from "../components/Common/NavBar";
 import { ReactComponent as Oval } from "../assets/oval.svg";
 import { ReactComponent as MainBg } from "../assets/main-bg.svg";
 

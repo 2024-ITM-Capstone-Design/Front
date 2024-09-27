@@ -57,8 +57,8 @@ function Progress({ currentStep }: ProgressProps) {
       text: "Upload your audio file and enter details.",
     },
     {
-      label: "Review & Finalize",
-      text: "Review the analysis and finalize the prompt.",
+      label: "Verify & Finalize",
+      text: "Check the analysis result and finalize the prompt.",
     },
     {
       label: "View & Download",

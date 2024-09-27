@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as KakaoSignUp } from "../assets/kakao-sign-in.svg";
+import { ReactComponent as KakaoSignUp } from "../../assets/kakao-sign-in.svg";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { useAuthStore } from "../store/useAuthStore";
-import { logout } from "../api/user";
+import { useAuthStore } from "../../store/useAuthStore";
+import { logout } from "../../api/user";
 type MenuProps = {
   menu: string;
 };

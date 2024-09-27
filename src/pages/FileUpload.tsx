@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-import CreateLayout from "../components/CreateLayout";
+import CreateLayout from "../components/Common/CreateLayout";
 import Progress from "../components/Progress";
 import * as C from "../styles/create.style";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -10,10 +10,10 @@ import ManyForm from "../components/FIleUpload/ManyForm";
 import AudioUpload from "../components/FIleUpload/AudioUpload";
 import { ReactComponent as FileIcon } from "../assets/file.svg";
 import DeleteIcon from "../assets/icons/delete-icon";
-import { sendUserInput } from "../api/create";
+import { endUpload, sendUserInput } from "../api/create";
 import { useAuthStore } from "../store/useAuthStore";
 import getBlobDuration from "get-blob-duration";
-import { getPresignedUrl, uploadImageToS3 } from "../api/file";
+import { getPresignedUrl, uploadAudioToS3 } from "../api/file";
 function FileUpload() {
   const location = useLocation();
 
@@ -47,16 +47,20 @@ function FileUpload() {
       const url = await getPresignedUrl(file!.name, itemId);
       if (url) {
         //오디오 파일 S3 업로드 api 요청
-        await uploadImageToS3(file!, url);
+        await uploadAudioToS3(file!, url);
+        //파일 업로드 확인 및 오디오 분할 요청
+        const res = await endUpload(itemId);
 
-        if (menu === "ONE") {
-          //단일 이미지 생성 로직 api 호출
-          //성공 시 분석결과 확인 페이지 이동
-          navigate(`/create/analysis-result/${itemId}`);
-        } else {
-          //단일+여러 이미지 생성 로직 api 호출
-          // 가사 추출 조회&편집 페이지 이동
-          navigate(`/create/check-lyric/${itemId}`);
+        if (res?.status === 200) {
+          if (menu === "ONE") {
+            //단일 이미지 생성 로직 api 호출
+            //성공 시 분석결과 확인 페이지 이동
+            navigate(`/create/analysis-result/${itemId}`);
+          } else {
+            //단일+여러 이미지 생성 로직 api 호출
+            // 가사 추출 조회&편집 페이지 이동
+            navigate(`/create/check-lyric/${itemId}`);
+          }
         }
       }
     }

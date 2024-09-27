@@ -12,7 +12,7 @@ export const getPresignedUrl = async (fileName: string, id: string) => {
   }
 };
 
-export const uploadImageToS3 = async (file: File, presignedUrl: string) => {
+export const uploadAudioToS3 = async (file: File, presignedUrl: string) => {
   try {
     await axios.put(presignedUrl, file, {
       headers: {
@@ -20,6 +20,6 @@ export const uploadImageToS3 = async (file: File, presignedUrl: string) => {
       },
     });
   } catch (error) {
-    console.error("Image upload failed:", error);
+    console.error("Audio upload failed:", error);
   }
 };

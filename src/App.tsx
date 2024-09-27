@@ -13,6 +13,7 @@ import OAuth from "./pages/OAuth";
 import MyPage from "./pages/MyPage";
 import { useAuthStore } from "./store/useAuthStore";
 import { Navigate, Outlet } from "react-router-dom";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 function App() {
   const { isLoggedIn } = useAuthStore();
 
@@ -26,34 +27,40 @@ function App() {
     return isLoggedIn ? <Outlet /> : <Navigate to="/" />;
   };
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/intro" element={<Intro />} />
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/intro" element={<Intro />} />
 
-        <Route element={<PublicRoute />}>
-          <Route path="/redirect" element={<OAuth />} />
-        </Route>
+          <Route element={<PublicRoute />}>
+            <Route path="/redirect" element={<OAuth />} />
+          </Route>
 
-        <Route element={<PrivateRoute />}>
-          <Route path="/create/file-upload" element={<FileUpload />} />
-          <Route
-            path="/create/service-selection"
-            element={<ServiceSelection />}
-          />
-          <Route path="/create/check-lyric/:itemId" element={<CheckLyric />} />
-          <Route
-            path="/create/analysis-result/:itemId"
-            element={<AnalysisResults />}
-          />
-          <Route
-            path="/create/check-result/:itemId"
-            element={<CheckResult />}
-          />
-          <Route path="/my-page" element={<MyPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+          <Route element={<PrivateRoute />}>
+            <Route path="/create/file-upload" element={<FileUpload />} />
+            <Route
+              path="/create/service-selection"
+              element={<ServiceSelection />}
+            />
+            <Route
+              path="/create/check-lyric/:itemId"
+              element={<CheckLyric />}
+            />
+            <Route
+              path="/create/analysis-result/:itemId"
+              element={<AnalysisResults />}
+            />
+            <Route
+              path="/create/check-result/:itemId"
+              element={<CheckResult />}
+            />
+            <Route path="/my-page" element={<MyPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={true} />
+    </>
   );
 }
 

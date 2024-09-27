@@ -24,3 +24,30 @@ export const sendUserInput = async (
     console.log(error);
   }
 };
+
+export const endUpload = async (itemId: string) => {
+  try {
+    const res = await axiosInstance.post("/api/audio/upload", {
+      isUpload: true,
+      inputDataId: itemId,
+    });
+
+    if (res) {
+      return res;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getLyrics = async (itemId: string) => {
+  try {
+    const res = await axiosInstance.get(`/api/audio/transcribe/${itemId}`);
+
+    if (res) {
+      return res.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

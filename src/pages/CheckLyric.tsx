@@ -7,8 +7,8 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import PlayerItem from "../components/Common/PlayerItem";
-import { useQuery } from "@tanstack/react-query";
-import { getLyrics } from "../api/create";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getLyrics, reviseLyric } from "../api/create";
 import { useParams } from "react-router-dom";
 import Slider from "react-slick"; // 슬라이더 라이브러리 추가
 import "slick-carousel/slick/slick.css";
@@ -23,6 +23,10 @@ function CheckLyric() {
   };
 
   const { itemId } = useParams() as { itemId: string };
+
+  // QueryClient 가져오기
+  const queryClient = useQueryClient();
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["getLyric"],
     queryFn: () => getLyrics(itemId),
@@ -60,7 +64,35 @@ function CheckLyric() {
   // PlayerItem에서 수정된 가사를 받아서 서버로 보내는 함수
   const handleLyricChange = (index: number, newLyric: string) => {
     console.log(newLyric);
+    mutation.mutate({
+      itemId: itemId,
+      segmentOrder: index,
+      newLyric: newLyric,
+    });
   };
+
+  const mutation = useMutation({
+    mutationFn: async ({
+      itemId,
+      segmentOrder,
+      newLyric,
+    }: {
+      itemId: string;
+      segmentOrder: number;
+      newLyric: string;
+    }) => {
+      await reviseLyric(itemId, segmentOrder, newLyric);
+    },
+    onSuccess: () => {
+      // 수정이 성공적으로 완료되었을 때 queryClient.invalidateQueries로 캐시된 데이터를 다시 가져옵니다.
+      queryClient.invalidateQueries({
+        queryKey: ["getLyrics"],
+      });
+    },
+    onError: () => {
+      alert("Failed");
+    },
+  });
 
   return (
     <>

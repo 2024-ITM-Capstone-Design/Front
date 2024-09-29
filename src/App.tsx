@@ -37,26 +37,23 @@ function App() {
             <Route path="/redirect" element={<OAuth />} />
           </Route>
 
-          <Route element={<PrivateRoute />}>
-            <Route path="/create/file-upload" element={<FileUpload />} />
-            <Route
-              path="/create/service-selection"
-              element={<ServiceSelection />}
-            />
-            <Route
-              path="/create/check-lyric/:itemId"
-              element={<CheckLyric />}
-            />
-            <Route
-              path="/create/analysis-result/:itemId"
-              element={<AnalysisResults />}
-            />
-            <Route
-              path="/create/check-result/:itemId"
-              element={<CheckResult />}
-            />
-            <Route path="/my-page" element={<MyPage />} />
-          </Route>
+          {/* <Route element={<PrivateRoute />}> */}
+          <Route path="/create/file-upload" element={<FileUpload />} />
+          <Route
+            path="/create/service-selection"
+            element={<ServiceSelection />}
+          />
+          <Route path="/create/check-lyric/:itemId" element={<CheckLyric />} />
+          <Route
+            path="/create/analysis-result/:itemId"
+            element={<AnalysisResults />}
+          />
+          <Route
+            path="/create/check-result/:itemId"
+            element={<CheckResult />}
+          />
+          <Route path="/my-page" element={<MyPage />} />
+          {/* </Route> */}
         </Routes>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={true} />

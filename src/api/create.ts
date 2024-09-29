@@ -51,3 +51,24 @@ export const getLyrics = async (itemId: string) => {
     console.log(error);
   }
 };
+
+export const reviseLyric = async (
+  itemId: string,
+  segmentOrder: number,
+  newLyric: string
+) => {
+  try {
+    const res = await axiosInstance.put(
+      `/api/lyrics/update/${itemId}/${segmentOrder}`,
+      {
+        newLyrics: newLyric,
+      }
+    );
+
+    if (res) {
+      return res.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -15,8 +15,8 @@ import { useAuthStore } from "./store/useAuthStore";
 import { Navigate, Outlet } from "react-router-dom";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 function App() {
-  const { isLoggedIn } = useAuthStore();
-
+  // const { isLoggedIn } = useAuthStore();
+  const isLoggedIn = true;
   //로그인한 회원은 들어갈 수 없는 페이지
   const PublicRoute = () => {
     return isLoggedIn ? <Navigate to="/" /> : <Outlet />;
@@ -37,23 +37,26 @@ function App() {
             <Route path="/redirect" element={<OAuth />} />
           </Route>
 
-          {/* <Route element={<PrivateRoute />}> */}
-          <Route path="/create/file-upload" element={<FileUpload />} />
-          <Route
-            path="/create/service-selection"
-            element={<ServiceSelection />}
-          />
-          <Route path="/create/check-lyric/:itemId" element={<CheckLyric />} />
-          <Route
-            path="/create/analysis-result/:itemId"
-            element={<AnalysisResults />}
-          />
-          <Route
-            path="/create/check-result/:itemId"
-            element={<CheckResult />}
-          />
-          <Route path="/my-page" element={<MyPage />} />
-          {/* </Route> */}
+          <Route element={<PrivateRoute />}>
+            <Route path="/create/file-upload" element={<FileUpload />} />
+            <Route
+              path="/create/service-selection"
+              element={<ServiceSelection />}
+            />
+            <Route
+              path="/create/check-lyric/:itemId"
+              element={<CheckLyric />}
+            />
+            <Route
+              path="/create/analysis-result/:itemId"
+              element={<AnalysisResults />}
+            />
+            <Route
+              path="/create/check-result/:itemId"
+              element={<CheckResult />}
+            />
+            <Route path="/my-page" element={<MyPage />} />
+          </Route>
         </Routes>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={true} />

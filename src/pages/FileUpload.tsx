@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import CreateLayout from "../components/Common/CreateLayout";
-import Progress from "../components/Progress";
-import * as C from "../styles/create.style";
 import { useLocation, useNavigate } from "react-router-dom";
-import SingleForm from "../components/FIleUpload/SingleForm";
-import ManyForm from "../components/FIleUpload/ManyForm";
 import AudioUpload from "../components/FIleUpload/AudioUpload";
 import { ReactComponent as FileIcon } from "../assets/file.svg";
 import DeleteIcon from "../assets/icons/delete-icon";
@@ -14,6 +10,7 @@ import { endUpload, sendUserInput } from "../api/create";
 import { useAuthStore } from "../store/useAuthStore";
 import getBlobDuration from "get-blob-duration";
 import { getPresignedUrl, uploadAudioToS3 } from "../api/file";
+import NextButton from "../components/Common/NextButton";
 function FileUpload() {
   const location = useLocation();
 
@@ -67,64 +64,79 @@ function FileUpload() {
   };
 
   return (
-    <CreateLayout>
-      <Progress currentStep={1} />
-      <div className="flex flex-col items-end">
-        <C.ContentWrapper>
-          <C.ColBox className="w-[730px] m-auto">
+    <CreateLayout currentStep={1}>
+      <ContentWrapper>
+        <ColBox className="w-[730px] m-auto">
+          <InputBox>
+            <label className="title-md">🎶 Title</label>
+            <label className="text-sm">Please enter the song title</label>
+            <input
+              className="text-input w-full h-10"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </InputBox>
+          <RowBox className="justify-between">
+            <ColBox>
+              <InputBox className="w-[355px]">
+                <label className="title-md">🎧 Audio File</label>
+                <label className="text-sm">Please upload the song file</label>
+                <AudioUpload file={file} setFile={setFile} />
+              </InputBox>
+              {file && (
+                <FileBox>
+                  <RowBox>
+                    <FileIcon />
+                    <span className="text-sm ml-2">{file.name}</span>
+                  </RowBox>
+                  <button onClick={() => setFile(null)}>
+                    <DeleteIcon />
+                  </button>
+                </FileBox>
+              )}
+            </ColBox>
             <InputBox>
-              <label className="title-md">🎶 Title</label>
-              <label className="text-sm">Please enter the song title</label>
-              <input
-                className="text-input w-full h-10"
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+              <label className="title-md">🎼 Lyrics</label>
+              <label className="text-sm">Please enter the song lyrics</label>
+              <textarea
+                className="text-input w-[350px] h-[346px] pt-1"
+                value={lyric}
+                onChange={(e) => setLyric(e.target.value)}
               />
             </InputBox>
-            <C.RowBox className="justify-between">
-              <C.ColBox>
-                <InputBox className="w-[355px]">
-                  <label className="title-md">🎧 Audio File</label>
-                  <label className="text-sm">Please upload the song file</label>
-                  <AudioUpload file={file} setFile={setFile} />
-                </InputBox>
-                {file && (
-                  <FileBox>
-                    <C.RowBox>
-                      <FileIcon />
-                      <span className="text-sm ml-2">{file.name}</span>
-                    </C.RowBox>
-                    <button onClick={() => setFile(null)}>
-                      <DeleteIcon />
-                    </button>
-                  </FileBox>
-                )}
-              </C.ColBox>
-              <InputBox>
-                <label className="title-md">🎼 Lyrics</label>
-                <label className="text-sm">Please enter the song lyrics</label>
-                <textarea
-                  className="text-input w-[350px] h-[346px] pt-1"
-                  value={lyric}
-                  onChange={(e) => setLyric(e.target.value)}
-                />
-              </InputBox>
-            </C.RowBox>
-          </C.ColBox>
-        </C.ContentWrapper>
-        <C.NextButton
-          onClick={goToNextPage}
-          disabled={!file || title === "" || lyric === ""}
-        >
-          Next →
-        </C.NextButton>
-      </div>
+          </RowBox>
+        </ColBox>
+      </ContentWrapper>
+      <NextButton
+        onClick={goToNextPage}
+        disabled={!file || title === "" || lyric === ""}
+      />
     </CreateLayout>
   );
 }
 
 export default FileUpload;
+
+const ContentWrapper = styled.div`
+  ${tw`w-[829px] h-[619px] ml-6 bg-gray [border-radius: 15px] p-7 font-display flex flex-col`}
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  .title-md {
+    ${tw`font-semibold text-white text-md`}
+  }
+  .text-sm {
+    ${tw`font-light text-subGray text-sm`}
+  }
+`;
+
+const RowBox = styled.div`
+  ${tw`flex flex-row`}
+`;
+
+const ColBox = styled.div`
+  ${tw`flex flex-col`}
+`;
 const InputBox = styled.div`
   ${tw`flex flex-col my-2.5`}
 

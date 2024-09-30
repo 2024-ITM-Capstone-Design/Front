@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
 import CreateLayout from "../components/Common/CreateLayout";
-import Progress from "../components/Progress";
-import * as C from "../styles/create.style";
+
 import tw from "twin.macro";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +12,7 @@ import Slider from "react-slick"; // 슬라이더 라이브러리 추가
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Loader from "../components/Common/Loader";
+import NextButton from "../components/Common/NextButton";
 
 function CheckLyric() {
   const navigate = useNavigate();
@@ -96,38 +95,35 @@ function CheckLyric() {
 
   return (
     <>
-      <CreateLayout>
-        <Progress currentStep={1} />
-        <div className="flex flex-col items-end">
-          <ContentWrapper>
-            <label className="title-md">Lyric Segmentation & Editing</label>
-            <label className="text-sm">
-              These are the lyrics automatically extracted by AI at 36-second
-              intervals! If there are any parts that need correction to improve
-              accuracy, please feel free to edit them manually.
-            </label>
-            <ItemBox>
-              <Slider {...settings}>
-                {!isLoading &&
-                  data &&
-                  data.segments.length > 0 &&
-                  data.segments.map((item: any, index: number) => (
-                    <PlayerItem
-                      key={index}
-                      segmentIndex={item.segmentOrder}
-                      totalDuration={data.duration}
-                      audioUrl={item.segmentFileUrl}
-                      text={item.segmentLyric}
-                      onChange={(newText: string) =>
-                        handleLyricChange(item.segmentOrder, newText)
-                      }
-                    />
-                  ))}
-              </Slider>
-            </ItemBox>
-          </ContentWrapper>
-          <C.NextButton onClick={handleNext}>Next →</C.NextButton>
-        </div>
+      <CreateLayout currentStep={1}>
+        <ContentWrapper>
+          <label className="title-md">Lyric Segmentation & Editing</label>
+          <label className="text-sm">
+            These are the lyrics automatically extracted by AI at 36-second
+            intervals! If there are any parts that need correction to improve
+            accuracy, please feel free to edit them manually.
+          </label>
+          <ItemBox>
+            <Slider {...settings}>
+              {!isLoading &&
+                data &&
+                data.segments.length > 0 &&
+                data.segments.map((item: any, index: number) => (
+                  <PlayerItem
+                    key={index}
+                    segmentIndex={item.segmentOrder}
+                    totalDuration={data.duration}
+                    audioUrl={item.segmentFileUrl}
+                    text={item.segmentLyric}
+                    onChange={(newText: string) =>
+                      handleLyricChange(item.segmentOrder, newText)
+                    }
+                  />
+                ))}
+            </Slider>
+          </ItemBox>
+        </ContentWrapper>
+        <NextButton onClick={handleNext} />
       </CreateLayout>
       {isLoading && <Loader description="Loading lyrics, please wait..." />}
     </>
@@ -136,7 +132,7 @@ function CheckLyric() {
 
 export default CheckLyric;
 
-export const ContentWrapper = styled.div`
+const ContentWrapper = styled.div`
   ${tw`w-[829px] h-[619px] ml-6 bg-gray [border-radius: 15px] p-7 font-display flex flex-col`}
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 

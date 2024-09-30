@@ -2,13 +2,14 @@ import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { ResponsiveLine } from "@nivo/line";
+import { ReactComponent as PlayListIcon } from "../../assets/playlist-icon.svg";
 function ViewGraph() {
   const Dummydata = [
     {
       id: "arousal",
-      serieColor: "#A6EEF6",
-      color: "#A6EEF6",
-      pointColor: "#A6EEF6",
+      serieColor: "#FFF9C6",
+      color: "#FFF9C6",
+      pointColor: "#FFF9C6",
       data: [
         {
           x: "00:00",
@@ -71,10 +72,14 @@ function ViewGraph() {
   ];
   return (
     <Container>
-      <span className="title">Melody</span>
+      <div className="flex flex-row gap-2 ">
+        <PlayListIcon />
+        <span className="text-md">Insights of melody</span>
+      </div>
+      {/* <span className="title">Melody</span> */}
       <ResponsiveLine
         data={Dummydata}
-        margin={{ top: 5, right: 50, bottom: 70, left: 50 }}
+        margin={{ top: 15, right: 50, bottom: 70, left: 50 }}
         xScale={{ type: "point" }}
         yScale={{
           type: "linear",
@@ -83,7 +88,7 @@ function ViewGraph() {
           stacked: true,
           reverse: false,
         }}
-        yFormat=" >-.2f"
+        yFormat=" >-.4f"
         curve="cardinal"
         axisTop={null}
         axisRight={null}
@@ -92,6 +97,7 @@ function ViewGraph() {
         }}
         axisLeft={{
           tickPadding: 5,
+          tickValues: [-1, -0.5, 0, 0.5, 1],
         }}
         theme={{
           text: { fill: "#BDC0C4" },
@@ -102,11 +108,11 @@ function ViewGraph() {
           datum: "color",
         }}
         enableGridX={false}
+        gridYValues={[-1, -0.5, 0, 0.5, 1]}
         pointSize={6}
         pointBorderWidth={3}
         pointBorderColor="#1E1F25"
         pointLabel="data.yFormatted"
-        pointLabelYOffset={-12}
         enableTouchCrosshair={true}
         useMesh={true}
         legends={[
@@ -142,8 +148,9 @@ function ViewGraph() {
 export default ViewGraph;
 
 const Container = styled.div`
-  ${tw`w-full h-[250px] flex flex-col items-center bg-black rounded-[16px]`}
-  .title {
-    ${tw`font-display font-normal text-base text-white my-1.5`}
+  ${tw`w-full h-[280px] flex flex-col items-start bg-black rounded-[16px] py-4  px-3 drop-shadow-[ 0px 4px 4px rgba(0, 0, 0, 0.4)]`}
+
+  .text-md {
+    ${tw`font-display font-medium text-mint text-base mb-1`}
   }
 `;

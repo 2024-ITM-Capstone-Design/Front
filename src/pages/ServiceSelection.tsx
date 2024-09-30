@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import CreateLayout from "../components/Common/CreateLayout";
-import Progress from "../components/Progress";
-import * as C from "../styles/create.style";
 import { useNavigate } from "react-router-dom";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { ReactComponent as Camera } from "../assets/camera.svg";
 import { ReactComponent as Player } from "../assets/player.svg";
+import NextButton from "../components/Common/NextButton";
 function ServiceSelection() {
   const navigate = useNavigate();
 
@@ -42,60 +41,69 @@ function ServiceSelection() {
   };
 
   return (
-    <CreateLayout>
-      <Progress currentStep={0} />
-      <div className="flex flex-col items-end">
-        <C.ContentWrapper>
-          <label className="title-md">Service Selection</label>
-          <label className="text-sm">
-            Please select the service you want to receive. You can select
-            multiple options.
-          </label>
-          <C.RowBox className="mt-12 mx-auto w-[650px] justify-between">
-            <ButtonWrapper
-              active={selectedOne}
-              onClick={() => setSelectedOne(!selectedOne)}
-            >
-              <Camera />
-              <div className="h-[100px] flex flex-col items-center">
-                <label className="title-md my-2 w-[150px]">
-                  Cover Image Generation
-                </label>
-                <label className="text-sm">Generate a custom cover image</label>
-                <label className="text-sm">
-                  for your music, and download it.
-                </label>
-              </div>
-            </ButtonWrapper>
-            <ButtonWrapper
-              active={selectedMany}
-              onClick={() => setSelectedMany(!selectedMany)}
-            >
-              <Player />
-              <div className="h-[100px] flex flex-col items-center">
-                <label className="title-md my-2">
-                  Section-Based Image Generation
-                </label>
-                <label className="text-sm">Generate custom images</label>
-                <label className="text-sm">
-                  for each section of the music{" "}
-                </label>
-              </div>
-            </ButtonWrapper>
-          </C.RowBox>
-        </C.ContentWrapper>
-        <C.NextButton
-          onClick={goToNextPage}
-          disabled={!selectedOne && !selectedMany}
-        >
-          Next →
-        </C.NextButton>
-      </div>
+    <CreateLayout currentStep={0}>
+      <ContentWrapper>
+        <label className="title-md">Service Selection</label>
+        <label className="text-sm">
+          Please select the service you want to receive. You can select multiple
+          options.
+        </label>
+        <RowBox className="mt-12 mx-auto w-[650px] justify-between">
+          <ButtonWrapper
+            active={selectedOne}
+            onClick={() => setSelectedOne(!selectedOne)}
+          >
+            <Camera />
+            <div className="h-[100px] flex flex-col items-center">
+              <label className="title-md my-2 w-[150px]">
+                Cover Image Generation
+              </label>
+              <label className="text-sm">Generate a custom cover image</label>
+              <label className="text-sm">
+                for your music, and download it.
+              </label>
+            </div>
+          </ButtonWrapper>
+          <ButtonWrapper
+            active={selectedMany}
+            onClick={() => setSelectedMany(!selectedMany)}
+          >
+            <Player />
+            <div className="h-[100px] flex flex-col items-center">
+              <label className="title-md my-2">
+                Section-Based Image Generation
+              </label>
+              <label className="text-sm">Generate custom images</label>
+              <label className="text-sm">for each section of the music </label>
+            </div>
+          </ButtonWrapper>
+        </RowBox>
+      </ContentWrapper>
+      <NextButton
+        onClick={goToNextPage}
+        disabled={!selectedOne && !selectedMany}
+      />
     </CreateLayout>
   );
 }
 
 export default ServiceSelection;
+
+const ContentWrapper = styled.div`
+  ${tw`w-[829px] h-[619px] ml-6 bg-gray [border-radius: 15px] p-7 font-display flex flex-col`}
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  .title-md {
+    ${tw`font-semibold text-white text-md`}
+  }
+  .text-sm {
+    ${tw`font-light text-subGray text-sm`}
+  }
+`;
+
+const RowBox = styled.div`
+  ${tw`flex flex-row`}
+`;
 
 const ButtonWrapper = styled.button<{ active: boolean }>`
   ${tw`flex flex-col items-center w-[305px] h-[355px] [border-radius: 5px] border-[1px] justify-center`}

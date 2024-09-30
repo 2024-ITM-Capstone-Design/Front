@@ -46,7 +46,7 @@ function Progress({ currentStep }: ProgressProps) {
     }
   };
 
-  const steps = [0, 1, 2, 3]; // 총 4단계
+  const steps = [0, 1, 2, 3, 4]; // 총 4단계
   const steps_name = [
     {
       label: "Service Selection",
@@ -57,8 +57,12 @@ function Progress({ currentStep }: ProgressProps) {
       text: "Upload your audio file and enter details.",
     },
     {
-      label: "Verify & Finalize",
-      text: "Check the analysis result and finalize the prompt.",
+      label: "Discover Music Insights",
+      text: "Explore the emotional characteristics of your song.",
+    },
+    {
+      label: "Generate Image Prompt",
+      text: "Create the final prompt for generating images.",
     },
     {
       label: "View & Download",
@@ -114,11 +118,11 @@ const statusChange = keyframes`
 `;
 
 const Wrapper = styled.div`
-  ${tw`w-[356px] h-[310px] bg-gray [border-radius: 15px] flex flex-row`}
+  ${tw`w-[356px] h-[335px] bg-gray [border-radius: 15px] flex flex-row`}
 `;
 
 const StepBar = styled.div`
-  ${tw`flex flex-col h-[244px] justify-between ml-4 mt-8`}
+  ${tw`flex flex-col h-[260px] justify-between ml-4 mt-8`}
   .step-box {
     ${tw`flex flex-col`}
     .main-text {
@@ -130,7 +134,7 @@ const StepBar = styled.div`
   }
 `;
 const ProgressBar = styled.div`
-  ${tw`flex flex-col items-center w-[24px] h-[228px] justify-between ml-7 mt-9`}
+  ${tw`flex flex-col items-center w-[24px] h-[240px] justify-between ml-7 mt-9`}
 `;
 
 const StatusIcon = styled.div<{

@@ -4,7 +4,6 @@ import styled from "styled-components";
 import PlayIcon from "../../assets/icons/play-icon";
 import StopIcon from "../../assets/icons/stop-icon";
 import { ReactComponent as Timer } from "../../assets/timer.svg";
-import * as C from "../../styles/create.style";
 import { formatTime } from "../../utils/format-time";
 
 type PlayerItemProps = {
@@ -62,15 +61,15 @@ function PlayerItem({
       <button className="play-btn" onClick={handlePlay}>
         {!play ? <PlayIcon /> : <StopIcon />}
       </button>
-      <C.ColBox className="w-[95px] mx-[15px]">
+      <ColBox className="w-[95px] mx-[15px]">
         <span className="index">Segment {segmentIndex}</span>
-        <C.RowBox className="items-center mt-1">
+        <RowBox className="items-center mt-1">
           <Timer />
           <span className="time">{`${formatTime(segmentStart)}-${formatTime(
             segmentEnd
           )}`}</span>
-        </C.RowBox>
-      </C.ColBox>
+        </RowBox>
+      </ColBox>
       {editMode ? (
         <>
           <textarea
@@ -131,4 +130,12 @@ const Wrapper = styled.div`
       ${tw`outline-white `}
     }
   }
+`;
+
+const ColBox = styled.div`
+  ${tw`flex flex-col items-center`}
+`;
+
+const RowBox = styled.div`
+  ${tw`flex items-center`}
 `;

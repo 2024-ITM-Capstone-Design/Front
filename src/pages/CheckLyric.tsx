@@ -17,17 +17,16 @@ import NextButton from "../components/Common/NextButton";
 function CheckLyric() {
   const navigate = useNavigate();
 
-  const handleNext = () => {
-    navigate("/create/analysis-result");
-  };
-
   const { itemId } = useParams() as { itemId: string };
+  const handleNext = () => {
+    navigate(`/create/analysis-result/${itemId}`);
+  };
 
   // QueryClient 가져오기
   const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["getLyric"],
+    queryKey: ["getLyric", itemId],
     queryFn: () => getLyrics(itemId),
   });
 
@@ -92,23 +91,20 @@ function CheckLyric() {
       alert("Failed");
     },
   });
-
-  return (
-    <>
-      <CreateLayout currentStep={1}>
-        <ContentWrapper>
-          <label className="title-md">Lyric Segmentation & Editing</label>
-          <label className="text-sm">
-            These are the lyrics automatically extracted by AI at 36-second
-            intervals! If there are any parts that need correction to improve
-            accuracy, please feel free to edit them manually.
-          </label>
-          <ItemBox>
-            <Slider {...settings}>
-              {!isLoading &&
-                data &&
-                data.segments.length > 0 &&
-                data.segments.map((item: any, index: number) => (
+  if (!isLoading && data && data.segments.length > 0) {
+    return (
+      <>
+        <CreateLayout currentStep={1}>
+          <ContentWrapper>
+            <label className="title-md">Lyric Segmentation & Editing</label>
+            <label className="text-sm">
+              These are the lyrics automatically extracted by AI at 36-second
+              intervals! If there are any parts that need correction to improve
+              accuracy, please feel free to edit them manually.
+            </label>
+            <ItemBox>
+              <Slider {...settings}>
+                {data.segments.map((item: any, index: number) => (
                   <PlayerItem
                     key={index}
                     segmentIndex={item.segmentOrder}
@@ -120,14 +116,22 @@ function CheckLyric() {
                     }
                   />
                 ))}
-            </Slider>
-          </ItemBox>
+              </Slider>
+            </ItemBox>
+          </ContentWrapper>
+          <NextButton onClick={handleNext} />
+        </CreateLayout>
+      </>
+    );
+  } else {
+    return (
+      <CreateLayout currentStep={1}>
+        <ContentWrapper>
+          <Loader description="We are extracting your lyrics by segment, please hold on..." />
         </ContentWrapper>
-        <NextButton onClick={handleNext} />
       </CreateLayout>
-      {isLoading && <Loader description="Loading lyrics, please wait..." />}
-    </>
-  );
+    );
+  }
 }
 
 export default CheckLyric;

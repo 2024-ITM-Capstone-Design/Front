@@ -33,7 +33,7 @@ function PlayerItem({
     //전체 노래 시간(mm:ss)을 초 단위로 변환
     const totalSeconds = totalDuration;
 
-    const start = segmentIndex * segmentDuration;
+    const start = (segmentIndex - 1) * segmentDuration;
     const end = Math.min(start + segmentDuration, totalSeconds);
     setSegmentStart(start);
     setSegmentEnd(end);

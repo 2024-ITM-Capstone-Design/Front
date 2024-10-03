@@ -7,36 +7,90 @@ import ViewMood from "../components/AnalysisResult/ViewMood";
 import { ReactComponent as PlayListIcon } from "../assets/playlist-icon.svg";
 import ViewSummary from "../components/AnalysisResult/ViewSummary";
 import NextButton from "../components/Common/NextButton";
+import { getAnalysisResult } from "../api/create";
+import { useQuery } from "@tanstack/react-query";
+import {
+  processGraphData,
+  processMoodData,
+} from "../data/ProcessDataComponent";
+import Loader from "../components/Common/Loader";
+
+type MoodData = {
+  type: string;
+  duration: number;
+  mood: string[];
+};
+
+type GraphData = {
+  id: string;
+  serieColor: string;
+  color: string;
+  pointColor: string;
+  data: { x: string; y: number }[];
+}[];
 function AnalysisResults() {
   const navigate = useNavigate();
   const { itemId } = useParams() as { itemId: string };
   const goToNextPage = () => {
     navigate("/create/check-result");
   };
-  return (
-    <CreateLayout currentStep={2}>
-      <ContentWrapper>
-        <span className="title-md">Discover Music Insights</span>
-        <span className="text-sm">
-          Explore the insights of your song, including a concise summary, the
-          Valence&Arousal derived from audio analysis, and the mood captured
-          from the lyrics.
-        </span>
-        <ViewSummary />
-        {/* 오디오, 가사 분석 */}
-        <RowBox>
-          <ViewGraph />
-          <ViewMood />
-        </RowBox>
-      </ContentWrapper>
-      <NextButton onClick={goToNextPage} />
-    </CreateLayout>
-  );
+
+  // Query to fetch analysis result
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["getAnalysisResult", itemId],
+    queryFn: () => getAnalysisResult(itemId),
+  });
+
+  // Process the data if it exists
+  let processedMoodData: MoodData | undefined;
+  let graphData: GraphData | undefined;
+  if (!isLoading && data) {
+    processedMoodData = processMoodData(data);
+    graphData = processGraphData(data.analysisResults, data.inputData.duration);
+  }
+
+  if (!isLoading && processMoodData !== undefined && graphData !== undefined) {
+    return (
+      <CreateLayout currentStep={2}>
+        <ContentWrapper>
+          <span className="title-md">Discover Music Insights</span>
+          <span className="text-sm">
+            Explore the insights of your song, including a concise summary, the
+            Valence&Arousal derived from audio analysis, and the mood captured
+            from the lyrics.
+          </span>
+          <ViewSummary content={data.inputData.audioIntro} />
+          {/* 오디오, 가사 분석 */}
+          <RowBox>
+            <ViewGraph graphData={graphData} />
+            <ViewMood
+              type={processedMoodData!.type}
+              duration={processedMoodData!.duration}
+              mood={processedMoodData!.mood}
+            />
+          </RowBox>
+        </ContentWrapper>
+        <NextButton onClick={goToNextPage} />
+      </CreateLayout>
+    );
+  } else {
+    return (
+      <CreateLayout currentStep={2}>
+        <ContentWrapper>
+          <Loader
+            description={
+              "Your song analysis is in progress, we're almost there..."
+            }
+          />
+        </ContentWrapper>
+      </CreateLayout>
+    );
+  }
 }
 
 export default AnalysisResults;
 export const ContentWrapper = styled.div`
-  ${tw`w-[829px] h-[630px] ml-6 bg-gray [border-radius: 15px] p-7 font-display flex flex-col`}
+  ${tw`w-[829px]  ml-6 bg-gray [border-radius: 15px] p-7 font-display flex flex-col`}
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   .title-md {

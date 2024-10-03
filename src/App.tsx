@@ -15,8 +15,8 @@ import { useAuthStore } from "./store/useAuthStore";
 import { Navigate, Outlet } from "react-router-dom";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 function App() {
-  // const { isLoggedIn } = useAuthStore();
-  const isLoggedIn = true;
+  const { isLoggedIn } = useAuthStore();
+
   //로그인한 회원은 들어갈 수 없는 페이지
   const PublicRoute = () => {
     return isLoggedIn ? <Navigate to="/" /> : <Outlet />;

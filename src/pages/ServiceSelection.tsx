@@ -70,7 +70,7 @@ function ServiceSelection() {
           >
             <Player />
             <div className="h-[100px] flex flex-col items-center">
-              <label className="title-md my-2">
+              <label className="title-md my-2 w-[150px]">
                 Section-Based Image Generation
               </label>
               <label className="text-sm">Generate custom images</label>

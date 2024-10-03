@@ -3,7 +3,7 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import { ResponsiveLine } from "@nivo/line";
 import { ReactComponent as PlayListIcon } from "../../assets/playlist-icon.svg";
-function ViewGraph() {
+function ViewGraph({ graphData }: { graphData: any }) {
   const Dummydata = [
     {
       id: "arousal",
@@ -78,7 +78,7 @@ function ViewGraph() {
       </div>
       {/* <span className="title">Melody</span> */}
       <ResponsiveLine
-        data={Dummydata}
+        data={graphData}
         margin={{ top: 15, right: 50, bottom: 70, left: 50 }}
         xScale={{ type: "point" }}
         yScale={{
@@ -148,7 +148,7 @@ function ViewGraph() {
 export default ViewGraph;
 
 const Container = styled.div`
-  ${tw`w-full h-[280px] flex flex-col items-start bg-black rounded-[16px] py-4  px-3 drop-shadow-[ 0px 4px 4px rgba(0, 0, 0, 0.4)]`}
+  ${tw`w-[481px] h-[280px] flex flex-col items-start bg-black rounded-[16px] py-4  px-3 drop-shadow-[ 0px 4px 4px rgba(0, 0, 0, 0.4)]`}
 
   .text-md {
     ${tw`font-display font-medium text-mint text-base mb-1`}

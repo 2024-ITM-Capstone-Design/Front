@@ -1,9 +1,10 @@
 import tw from "twin.macro";
 import styled from "styled-components";
 import { ReactComponent as PlayListIcon } from "../../assets/playlist-icon.svg";
-function ViewSummary() {
-  const content =
-    "The main theme of the song is nostalgia and reminiscing about a past love. The lyrics depict a summer in 2002 when the singer was 11 years old and fell in love, but now years later they are reflecting on those memories and how they shaped them. The key emotions conveyed are love, innocence, and nostalgia. The central narrative of the song is about a first love and the memories associated with it, with the main message being that some moments stay with us forever. ";
+type SummaryProps = {
+  content: string;
+};
+function ViewSummary({ content }: SummaryProps) {
   return (
     <Container>
       <div className="flex flex-row gap-2">

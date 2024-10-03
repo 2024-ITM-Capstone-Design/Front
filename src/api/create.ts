@@ -72,3 +72,15 @@ export const reviseLyric = async (
     console.log(error);
   }
 };
+
+export const getAnalysisResult = async (itemId: string) => {
+  try {
+    const res = await axiosInstance.get(`api/analysis/${itemId}`);
+
+    if (res) {
+      return res.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -3,12 +3,13 @@ import tw from "twin.macro";
 import styled from "styled-components";
 
 type ButtonProps = {
-  onClick: () => void;
+  type?: "button" | "submit" | "reset" | undefined;
+  onClick?: () => void;
   disabled?: boolean;
 };
-function NextButton({ onClick, disabled }: ButtonProps) {
+function NextButton({ onClick, disabled, type }: ButtonProps) {
   return (
-    <NextBtn onClick={onClick} disabled={disabled}>
+    <NextBtn type={type} onClick={onClick} disabled={disabled}>
       Next →
     </NextBtn>
   );

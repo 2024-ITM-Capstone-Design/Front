@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as KakaoSignUp } from "../../assets/kakao-sign-in.svg";
+import Logo from "../../assets/logo.png";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { useAuthStore } from "../../store/useAuthStore";
@@ -35,14 +36,14 @@ function NavBar({ menu }: MenuProps) {
   return (
     <Wrapper>
       <Container>
-        <span
-          className="logo"
+        <img
+          src={Logo}
+          alt="logo"
           onClick={() => {
             navigate("/");
           }}
-        >
-          SoundPalette
-        </span>
+          width={200}
+        />
       </Container>
 
       <Container>

@@ -4,16 +4,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
 
 import Intro from "./pages/Intro";
-import FileUpload from "./pages/FileUpload";
-import ServiceSelection from "./pages/ServiceSelection";
-import AnalysisResults from "./pages/AnalysisResults";
+import FileUpload from "./pages/Create/FileUpload";
+import ServiceSelection from "./pages/Create/ServiceSelection";
+import AnalysisResults from "./pages/Create/AnalysisResults";
 import CheckResult from "./pages/CheckResult";
-import CheckLyric from "./pages/CheckLyric";
+import CheckLyric from "./pages/Create/CheckLyric";
 import OAuth from "./pages/OAuth";
 import MyPage from "./pages/MyPage";
 import { useAuthStore } from "./store/useAuthStore";
 import { Navigate, Outlet } from "react-router-dom";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import GeneratePrompt from "./pages/Create/GeneratePrompt";
 function App() {
   const { isLoggedIn } = useAuthStore();
 
@@ -54,6 +55,10 @@ function App() {
             <Route
               path="/create/check-result/:itemId"
               element={<CheckResult />}
+            />
+            <Route
+              path="/create/generate-prompt/:itemId"
+              element={<GeneratePrompt />}
             />
             <Route path="/my-page" element={<MyPage />} />
           </Route>

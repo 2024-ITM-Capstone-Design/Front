@@ -74,7 +74,7 @@ function Progress({ currentStep }: ProgressProps) {
     <Wrapper>
       <ProgressBar>
         {steps.map((step, index) => (
-          <>
+          <div key={index} className="flex flex-col items-center">
             <ViewStatus
               status={
                 currentStep > step
@@ -88,7 +88,7 @@ function Progress({ currentStep }: ProgressProps) {
             {index < steps.length - 1 && (
               <Line key={`line-${index}`} $active={currentStep > step} />
             )}
-          </>
+          </div>
         ))}
       </ProgressBar>
       <StepBar>

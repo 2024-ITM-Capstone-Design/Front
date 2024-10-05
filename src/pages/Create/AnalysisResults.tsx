@@ -1,19 +1,18 @@
-import CreateLayout from "../components/Common/CreateLayout";
+import CreateLayout from "../../components/Common/CreateLayout";
 import { useNavigate, useParams } from "react-router-dom";
 import tw from "twin.macro";
 import styled from "styled-components";
-import ViewGraph from "../components/AnalysisResult/ViewGraph";
-import ViewMood from "../components/AnalysisResult/ViewMood";
-import { ReactComponent as PlayListIcon } from "../assets/playlist-icon.svg";
-import ViewSummary from "../components/AnalysisResult/ViewSummary";
-import NextButton from "../components/Common/NextButton";
-import { getAnalysisResult } from "../api/create";
+import ViewGraph from "../../components/AnalysisResult/ViewGraph";
+import ViewMood from "../../components/AnalysisResult/ViewMood";
+import ViewSummary from "../../components/AnalysisResult/ViewSummary";
+import NextButton from "../../components/Common/NextButton";
+import { getAnalysisResult } from "../../api/create";
 import { useQuery } from "@tanstack/react-query";
 import {
   processGraphData,
   processMoodData,
-} from "../data/ProcessDataComponent";
-import Loader from "../components/Common/Loader";
+} from "../../data/ProcessDataComponent";
+import Loader from "../../components/Common/Loader";
 
 type MoodData = {
   type: string;

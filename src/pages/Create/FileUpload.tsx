@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-import CreateLayout from "../components/Common/CreateLayout";
+import CreateLayout from "../../components/Common/CreateLayout";
 import { useLocation, useNavigate } from "react-router-dom";
-import AudioUpload from "../components/FIleUpload/AudioUpload";
-import { ReactComponent as FileIcon } from "../assets/file.svg";
-import DeleteIcon from "../assets/icons/delete-icon";
-import { endUpload, sendUserInput } from "../api/create";
-import { useAuthStore } from "../store/useAuthStore";
+import AudioUpload from "../../components/FIleUpload/AudioUpload";
+import { ReactComponent as FileIcon } from "../../assets/file.svg";
+import DeleteIcon from "../../assets/icons/delete-icon";
+import { endUpload, sendUserInput } from "../../api/create";
+import { useAuthStore } from "../../store/useAuthStore";
 import getBlobDuration from "get-blob-duration";
-import { getPresignedUrl, uploadAudioToS3 } from "../api/file";
-import NextButton from "../components/Common/NextButton";
+import { getPresignedUrl, uploadAudioToS3 } from "../../api/file";
+import NextButton from "../../components/Common/NextButton";
 function FileUpload() {
   const location = useLocation();
 

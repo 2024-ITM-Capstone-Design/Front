@@ -1,18 +1,18 @@
-import CreateLayout from "../components/Common/CreateLayout";
+import CreateLayout from "../../components/Common/CreateLayout";
 
 import tw from "twin.macro";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-import PlayerItem from "../components/Common/PlayerItem";
+import PlayerItem from "../../components/Common/PlayerItem";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getLyrics, reviseLyric } from "../api/create";
+import { getLyrics, reviseLyric } from "../../api/create";
 import { useParams } from "react-router-dom";
 import Slider from "react-slick"; // 슬라이더 라이브러리 추가
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Loader from "../components/Common/Loader";
-import NextButton from "../components/Common/NextButton";
+import Loader from "../../components/Common/Loader";
+import NextButton from "../../components/Common/NextButton";
 
 function CheckLyric() {
   const navigate = useNavigate();

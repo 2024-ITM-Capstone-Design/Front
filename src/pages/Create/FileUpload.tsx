@@ -13,6 +13,7 @@ import { getPresignedUrl, uploadAudioToS3 } from "../../api/file";
 import NextButton from "../../components/Common/NextButton";
 function FileUpload() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const { menu } = location.state;
   console.log("state", location.state);
@@ -22,10 +23,13 @@ function FileUpload() {
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState<string>("");
   const [lyric, setLyric] = useState<string>("");
-
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const goToNextPage = async () => {
+    if (isLoading) return; // 이미 로딩 중이라면 중복 클릭 방지
+
+    setIsLoading(true); // 로딩 시작
+
     //오디오 파일 길이 계산 api 호출
     const duration = await getBlobDuration(file!);
     console.log(menu, title, lyric, userData.id!);
@@ -110,8 +114,14 @@ function FileUpload() {
       </ContentWrapper>
       <NextButton
         onClick={goToNextPage}
-        disabled={!file || title === "" || lyric === ""}
-      />
+        disabled={!file || title === "" || lyric === "" || isLoading}
+      >
+        {isLoading ? (
+          <div className="w-7 h-7 border-4 border-t-gray border-subGray rounded-full animate-spin"></div>
+        ) : (
+          "Next →"
+        )}
+      </NextButton>
     </CreateLayout>
   );
 }

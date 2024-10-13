@@ -124,7 +124,9 @@ function GeneratePrompt() {
         type="submit"
         onClick={handleSubmit(onSubmit)}
         disabled={checkValues()}
-      />
+      >
+        Next →
+      </NextButton>
     </CreateLayout>
   );
 }

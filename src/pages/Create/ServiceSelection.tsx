@@ -82,7 +82,9 @@ function ServiceSelection() {
       <NextButton
         onClick={goToNextPage}
         disabled={!selectedOne && !selectedMany}
-      />
+      >
+        Next →
+      </NextButton>
     </CreateLayout>
   );
 }

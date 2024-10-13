@@ -31,7 +31,7 @@ function AnalysisResults() {
   const navigate = useNavigate();
   const { itemId } = useParams() as { itemId: string };
   const goToNextPage = () => {
-    navigate("/create/check-result");
+    navigate(`/create/generate-prompt/${itemId}`);
   };
 
   // Query to fetch analysis result
@@ -69,7 +69,7 @@ function AnalysisResults() {
             />
           </RowBox>
         </ContentWrapper>
-        <NextButton onClick={goToNextPage} />
+        <NextButton onClick={goToNextPage}>Next →</NextButton>
       </CreateLayout>
     );
   } else {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 
@@ -6,11 +6,13 @@ type ButtonProps = {
   type?: "button" | "submit" | "reset" | undefined;
   onClick?: () => void;
   disabled?: boolean;
+
+  children?: ReactNode;
 };
-function NextButton({ onClick, disabled, type }: ButtonProps) {
+function NextButton({ onClick, disabled, type, children }: ButtonProps) {
   return (
     <NextBtn type={type} onClick={onClick} disabled={disabled}>
-      Next →
+      {children}
     </NextBtn>
   );
 }

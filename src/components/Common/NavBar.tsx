@@ -111,7 +111,7 @@ function NavBar({ menu }: MenuProps) {
 
 export default NavBar;
 
-const Wrapper = tw.div`flex flex-row items-center justify-between mx-auto max-w-7xl mt-10 `;
+const Wrapper = tw.div`w-full flex flex-row items-center justify-between max-w-7xl mt-10 px-7 mx-auto `;
 const Container = styled.div`
   ${tw`flex flex-row items-center z-10`}
 

@@ -134,7 +134,7 @@ function GeneratePrompt() {
 export default GeneratePrompt;
 
 const ContentWrapper = styled.div`
-  ${tw`w-[829px] ml-6 bg-gray [border-radius: 15px] p-7 font-display flex flex-col`}
+  ${tw`w-full bg-gray [border-radius: 15px] p-7 font-display flex flex-col`}
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   .title-md {
@@ -145,7 +145,7 @@ const ContentWrapper = styled.div`
   }
 `;
 const Container = styled.div`
-  ${tw`w-[743px] p-[20px] rounded-[16px] bg-black flex flex-col m-auto mt-5`}
+  ${tw`w-full p-[20px] rounded-[16px] bg-black flex flex-col m-auto mt-5`}
   .main-text {
     ${tw`font-normal text-sm text-white`}
   }

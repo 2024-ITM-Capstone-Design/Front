@@ -129,7 +129,7 @@ function FileUpload() {
 export default FileUpload;
 
 const ContentWrapper = styled.div`
-  ${tw`w-[829px] h-[619px] ml-6 bg-gray [border-radius: 15px] p-7 font-display flex flex-col`}
+  ${tw`w-full h-[619px] ml-6 bg-gray [border-radius: 15px] p-7 font-display flex flex-col`}
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   .title-md {

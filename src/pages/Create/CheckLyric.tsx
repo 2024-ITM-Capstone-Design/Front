@@ -93,35 +93,33 @@ function CheckLyric() {
   });
   if (!isLoading && data && data.segments.length > 0) {
     return (
-      <>
-        <CreateLayout currentStep={1}>
-          <ContentWrapper>
-            <label className="title-md">Lyric Segmentation & Editing</label>
-            <label className="text-sm">
-              These are the lyrics automatically extracted by AI at 36-second
-              intervals! If there are any parts that need correction to improve
-              accuracy, please feel free to edit them manually.
-            </label>
-            <ItemBox>
-              <Slider {...settings}>
-                {data.segments.map((item: any, index: number) => (
-                  <PlayerItem
-                    key={index}
-                    segmentIndex={item.segmentOrder}
-                    totalDuration={data.duration}
-                    audioUrl={item.segmentFileUrl}
-                    text={item.segmentLyric}
-                    onChange={(newText: string) =>
-                      handleLyricChange(item.segmentOrder, newText)
-                    }
-                  />
-                ))}
-              </Slider>
-            </ItemBox>
-          </ContentWrapper>
-          <NextButton onClick={handleNext} />
-        </CreateLayout>
-      </>
+      <CreateLayout currentStep={1}>
+        <ContentWrapper>
+          <label className="title-md">Lyric Segmentation & Editing</label>
+          <label className="text-sm">
+            These are the lyrics automatically extracted by AI at 36-second
+            intervals! If there are any parts that need correction to improve
+            accuracy, please feel free to edit them manually.
+          </label>
+          <ItemBox>
+            <Slider {...settings}>
+              {data.segments.map((item: any, index: number) => (
+                <PlayerItem
+                  key={index}
+                  segmentIndex={item.segmentOrder}
+                  totalDuration={data.duration}
+                  audioUrl={item.segmentFileUrl}
+                  text={item.segmentLyric}
+                  onChange={(newText: string) =>
+                    handleLyricChange(item.segmentOrder, newText)
+                  }
+                />
+              ))}
+            </Slider>
+          </ItemBox>
+        </ContentWrapper>
+        <NextButton onClick={handleNext} />
+      </CreateLayout>
     );
   } else {
     return (
@@ -137,7 +135,7 @@ function CheckLyric() {
 export default CheckLyric;
 
 const ContentWrapper = styled.div`
-  ${tw`w-[829px] h-[619px] ml-6 bg-gray [border-radius: 15px] p-7 font-display flex flex-col`}
+  ${tw`w-full h-[619px] bg-gray [border-radius: 15px] p-7 font-display flex flex-col`}
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   .title-md {

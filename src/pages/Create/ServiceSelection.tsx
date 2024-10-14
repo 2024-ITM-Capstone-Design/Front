@@ -92,7 +92,7 @@ function ServiceSelection() {
 export default ServiceSelection;
 
 const ContentWrapper = styled.div`
-  ${tw`w-[829px] ml-6 bg-gray [border-radius: 15px] p-7 font-display flex flex-col `}
+  ${tw`w-full bg-gray [border-radius: 15px] p-7 pb-10 font-display flex flex-col `}
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   .title-md {

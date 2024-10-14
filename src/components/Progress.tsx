@@ -118,7 +118,7 @@ const statusChange = keyframes`
 `;
 
 const Wrapper = styled.div`
-  ${tw`w-[356px] h-[335px] bg-gray [border-radius: 15px] flex flex-row`}
+  ${tw`h-[335px] bg-gray [border-radius: 15px] flex flex-row p-2`}
 `;
 
 const StepBar = styled.div`
@@ -129,7 +129,7 @@ const StepBar = styled.div`
       ${tw`font-display font-medium text-sm text-mainColor`}
     }
     .sub-text {
-      ${tw`font-display font-light text-caption text-subGray`}
+      ${tw`font-display font-light text-caption text-subGray w-[250px]`}
     }
   }
 `;

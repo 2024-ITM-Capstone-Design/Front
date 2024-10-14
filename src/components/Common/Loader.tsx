@@ -33,7 +33,7 @@ export default Loader;
 // `;
 
 const Container = styled.div`
-  ${tw`flex flex-col items-center justify-center m-auto `}\
+  ${tw`w-full flex flex-col items-center justify-center m-auto `}\
 
   .text {
     ${tw` text-center font-display font-normal text-md text-white mb-3`}

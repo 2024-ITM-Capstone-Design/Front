@@ -41,7 +41,7 @@ function Main() {
 
 export default Main;
 const MainWrapper = styled.div`
-  ${tw`w-[560px] flex flex-col my-auto ml-5`}
+  ${tw`w-[560px] flex flex-col my-auto ml-5 `}
 
   .main-title {
     ${tw`font-display text-7xl text-white mt-40`}

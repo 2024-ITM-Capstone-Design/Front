@@ -6,7 +6,6 @@ type ButtonProps = {
   type?: "button" | "submit" | "reset" | undefined;
   onClick?: () => void;
   disabled?: boolean;
-
   children?: ReactNode;
 };
 function NextButton({ onClick, disabled, type, children }: ButtonProps) {

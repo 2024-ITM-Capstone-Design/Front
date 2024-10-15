@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import TickIcon from "../assets/icons/tick-icon";
 import DotIcon from "../assets/icons/dot";
@@ -118,7 +118,7 @@ const statusChange = keyframes`
 `;
 
 const Wrapper = styled.div`
-  ${tw`h-[335px] bg-gray [border-radius: 15px] flex flex-row p-2`}
+  ${tw`h-[335px] bg-gray [border-radius: 15px] flex flex-row p-1 pr-3`}
 `;
 
 const StepBar = styled.div`

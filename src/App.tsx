@@ -15,6 +15,7 @@ import { useAuthStore } from "./store/useAuthStore";
 import { Navigate, Outlet } from "react-router-dom";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import GeneratePrompt from "./pages/Create/GeneratePrompt";
+import ViewResult from "./pages/Create/ViewResult";
 function App() {
   const { isLoggedIn } = useAuthStore();
 
@@ -57,6 +58,7 @@ function App() {
             path="/create/generate-prompt/:itemId"
             element={<GeneratePrompt />}
           />
+          <Route path="/create/view-result/:itemId" element={<ViewResult />} />
           <Route path="/my-page" element={<MyPage />} />
           {/* </Route> */}
         </Routes>

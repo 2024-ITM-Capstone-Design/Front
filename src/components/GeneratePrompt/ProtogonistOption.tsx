@@ -27,7 +27,7 @@ function ProtogonistOption({ selectedOption, setSelectedOption }: OptionProps) {
   );
 }
 
-export default ProtogonistOption;
+export default React.memo(ProtogonistOption);
 
 const OptionBox = styled.div`
   ${tw`flex mt-2.5`}

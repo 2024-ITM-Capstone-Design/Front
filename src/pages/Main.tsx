@@ -1,4 +1,4 @@
-import React from "react";
+import { useCallback } from "react";
 import NavBar from "../components/Common/NavBar";
 import { ReactComponent as Oval } from "../assets/oval.svg";
 import { ReactComponent as MainBg } from "../assets/main-bg.svg";
@@ -10,6 +10,14 @@ import { useAuthStore } from "../store/useAuthStore";
 function Main() {
   const navigate = useNavigate();
   const { isLoggedIn } = useAuthStore();
+
+  const handleClick = useCallback(() => {
+    if (!isLoggedIn) {
+      alert("Please log in to access this feature.");
+    } else {
+      navigate("/create/service-selection");
+    }
+  }, [isLoggedIn, navigate]);
   return (
     <>
       <Oval className="absolute top-0" />
@@ -22,17 +30,7 @@ function Main() {
             Sound Palette is a platform that can be create images or videos for
             your own music with AI.
           </span>
-          <NaviButton
-            onClick={() => {
-              if (!isLoggedIn) {
-                alert("Please log in to access this feature.");
-              } else {
-                navigate("/create/service-selection");
-              }
-            }}
-          >
-            Create My Music Palette
-          </NaviButton>
+          <NaviButton onClick={handleClick}>Create My Music Palette</NaviButton>
         </MainWrapper>
       </div>
     </>

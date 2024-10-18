@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as KakaoSignUp } from "../../assets/kakao-sign-in.svg";
 import Logo from "../../assets/logo.png";
@@ -16,14 +16,14 @@ function NavBar({ menu }: MenuProps) {
 
   const { isLoggedIn } = useAuthStore();
 
-  const handleLogin = () => {
+  const handleLogin = useCallback(() => {
     const API_KEY = process.env.REACT_APP_REST_API_KEY;
     const REDIRECT_URI = "http://localhost:3000/redirect";
     const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     window.location.href = KAKAO_AUTH_URI;
-  };
+  }, []);
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     const res = await logout();
     if (res) {
       useAuthStore.setState({
@@ -32,7 +32,10 @@ function NavBar({ menu }: MenuProps) {
         accessToken: "",
       });
     }
-  };
+  }, []);
+  const hoverComponent = useMemo(() => {
+    return isHover && <KakaoSignUp className="absolute top-11" />;
+  }, [isHover]);
   return (
     <Wrapper>
       <Container>
@@ -100,7 +103,7 @@ function NavBar({ menu }: MenuProps) {
               <button className="login-btn" onClick={handleLogout}>
                 Logout
               </button>
-              {isHover && <KakaoSignUp className="absolute top-11" />}
+              {hoverComponent}
             </SocialContainer>
           </>
         )}
@@ -109,7 +112,7 @@ function NavBar({ menu }: MenuProps) {
   );
 }
 
-export default NavBar;
+export default React.memo(NavBar);
 
 const Wrapper = tw.div`w-full flex flex-row items-center justify-between max-w-7xl mt-10 px-7 mx-auto `;
 const Container = styled.div`

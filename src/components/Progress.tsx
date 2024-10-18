@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import TickIcon from "../assets/icons/tick-icon";
 import DotIcon from "../assets/icons/dot";
@@ -103,7 +103,7 @@ function Progress({ currentStep }: ProgressProps) {
   );
 }
 
-export default Progress;
+export default React.memo(Progress);
 
 // 애니메이션 정의
 const statusChange = keyframes`

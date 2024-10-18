@@ -13,6 +13,7 @@ import {
   processMoodData,
 } from "../../data/ProcessDataComponent";
 import Loader from "../../components/Common/Loader";
+import React, { useCallback } from "react";
 
 type MoodData = {
   type: string;
@@ -30,9 +31,9 @@ type GraphData = {
 function AnalysisResults() {
   const navigate = useNavigate();
   const { itemId } = useParams() as { itemId: string };
-  const goToNextPage = () => {
+  const goToNextPage = useCallback(() => {
     navigate(`/create/generate-prompt/${itemId}`);
-  };
+  }, [navigate, itemId]);
 
   // Query to fetch analysis result
   const { data, isLoading, error } = useQuery({

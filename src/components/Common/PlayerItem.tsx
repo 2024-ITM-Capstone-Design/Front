@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import PlayIcon from "../../assets/icons/play-icon";
@@ -32,21 +32,20 @@ function PlayerItem({
   useEffect(() => {
     //전체 노래 시간(mm:ss)을 초 단위로 변환
     const totalSeconds = totalDuration;
-
     const start = (segmentIndex - 1) * segmentDuration;
     const end = Math.min(start + segmentDuration, totalSeconds);
     setSegmentStart(start);
     setSegmentEnd(end);
   }, [segmentIndex, totalDuration, segmentDuration]);
 
-  //수정했을 시 호출되는 함수
-  const handleSave = () => {
+  //수정했을 시 호출되는 함수, useCallback 사용
+  const handleSave = useCallback(() => {
     setEditMode(false);
     onChange(editedText); // 수정된 텍스트를 부모로 전달
-  };
+  }, [editedText, onChange]);
 
-  const handlePlay = () => {
-    console.log(audioRef.current);
+  // 오디오 재생/중지 함수, useCallback 사용
+  const handlePlay = useCallback(() => {
     if (audioRef.current) {
       if (play) {
         audioRef.current.pause(); // 오디오 중지
@@ -55,7 +54,7 @@ function PlayerItem({
       }
       setPlay(!play);
     }
-  };
+  }, [play]);
   return (
     <Wrapper>
       <button className="play-btn" onClick={handlePlay}>

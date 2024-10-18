@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useCallback, useState } from "react";
 import CreateLayout from "../../components/Common/CreateLayout";
 import { useNavigate } from "react-router-dom";
 import tw from "twin.macro";
@@ -40,6 +40,14 @@ function ServiceSelection() {
     }
   };
 
+  const toggleSelectedOne = useCallback(() => {
+    setSelectedOne((prev) => !prev);
+  }, []);
+
+  const toggleSelectedMany = useCallback(() => {
+    setSelectedMany((prev) => !prev);
+  }, []);
+
   return (
     <CreateLayout currentStep={0}>
       <ContentWrapper>
@@ -49,10 +57,7 @@ function ServiceSelection() {
           options.
         </label>
         <RowBox className="mt-12 mx-auto w-[650px] justify-between">
-          <ButtonWrapper
-            $active={selectedOne}
-            onClick={() => setSelectedOne(!selectedOne)}
-          >
+          <ButtonWrapper $active={selectedOne} onClick={toggleSelectedOne}>
             <Camera />
             <div className="h-[100px] flex flex-col items-center">
               <label className="title-md my-2 w-[150px]">
@@ -64,10 +69,7 @@ function ServiceSelection() {
               </label>
             </div>
           </ButtonWrapper>
-          <ButtonWrapper
-            $active={selectedMany}
-            onClick={() => setSelectedMany(!selectedMany)}
-          >
+          <ButtonWrapper $active={selectedMany} onClick={toggleSelectedMany}>
             <Player />
             <div className="h-[100px] flex flex-col items-center">
               <label className="title-md my-2 w-[150px]">

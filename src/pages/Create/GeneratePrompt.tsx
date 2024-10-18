@@ -2,7 +2,7 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import CreateLayout from "../../components/Common/CreateLayout";
 import { ReactComponent as PencilSvg } from "../../assets/pencil.svg";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import ImageStyle from "../../components/GeneratePrompt/ImageStyle";
 import ProtogonistOption from "../../components/GeneratePrompt/ProtogonistOption";
 import NextButton from "../../components/Common/NextButton";
@@ -28,12 +28,13 @@ function GeneratePrompt() {
   >(null);
 
   const { register, handleSubmit, getValues, watch } = useForm<FormValues>();
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log("Form Data:", data);
-    console.log("Selected Image Option:", selectedImageOption);
-    console.log("Selected Protagonist Option:", selectedPromptOption);
-    if (selectedPromptOption === "CUSTOM") {
-      let script = `Age: ${data.AGE} Gender: ${data.GENDER} 
+  const onSubmit: SubmitHandler<FormValues> = useCallback(
+    (data) => {
+      console.log("Form Data:", data);
+      console.log("Selected Image Option:", selectedImageOption);
+      console.log("Selected Protagonist Option:", selectedPromptOption);
+      if (selectedPromptOption === "CUSTOM") {
+        let script = `Age: ${data.AGE} Gender: ${data.GENDER} 
       Physical Appearance: 
       - Eye color: ${data.EYE_COLOR}
       - Hair: ${data.HAIR}
@@ -41,12 +42,14 @@ function GeneratePrompt() {
       - Facial features: ${data.FEATURES}
       Clothing:
       - Style: ${data.STYLE}
-      - Color: ${data.COLOR_SCHEME} `;
-      console.log(script);
-    }
-  };
+      - Color: ${data.COLOR_SCHEME}`;
+        console.log(script);
+      }
+    },
+    [selectedImageOption, selectedPromptOption]
+  );
 
-  const checkValues = () => {
+  const checkValues = useMemo(() => {
     if (selectedPromptOption === "CUSTOM") {
       const {
         AGE,
@@ -71,7 +74,7 @@ function GeneratePrompt() {
     } else {
       return !selectedImageOption || !selectedPromptOption;
     }
-  };
+  }, [selectedPromptOption, selectedImageOption, watch]);
   return (
     <CreateLayout currentStep={3}>
       <ContentWrapper>
@@ -123,7 +126,7 @@ function GeneratePrompt() {
       <NextButton
         type="submit"
         onClick={handleSubmit(onSubmit)}
-        disabled={checkValues()}
+        disabled={checkValues}
       >
         Next →
       </NextButton>

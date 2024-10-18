@@ -132,5 +132,5 @@ const Container = styled.div`
 `;
 
 const SliderBox = styled.div`
-  ${tw`w-[200px] mx-6`}
+  ${tw`w-[200px] mx-auto`}
 `;

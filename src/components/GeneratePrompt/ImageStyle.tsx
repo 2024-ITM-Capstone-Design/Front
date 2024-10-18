@@ -64,7 +64,7 @@ function ImageStyleOption({ selectedOption, setSelectedOption }: OptionProps) {
   );
 }
 
-export default ImageStyleOption;
+export default React.memo(ImageStyleOption);
 
 const OptionBox = styled.div`
   ${tw`w-[622px] inline-block items-center justify-center `}

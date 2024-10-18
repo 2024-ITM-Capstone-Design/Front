@@ -1,9 +1,7 @@
 import CreateLayout from "../../components/Common/CreateLayout";
-
 import tw from "twin.macro";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
 import PlayerItem from "../../components/Common/PlayerItem";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getLyrics, reviseLyric } from "../../api/create";
@@ -13,6 +11,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Loader from "../../components/Common/Loader";
 import NextButton from "../../components/Common/NextButton";
+import { useCallback, useMemo } from "react";
 
 function CheckLyric() {
   const navigate = useNavigate();
@@ -33,41 +32,46 @@ function CheckLyric() {
   if (!isLoading && data) {
     console.log(data);
   }
-  const settings = {
-    dots: true,
-    infinite: true,
-    touchRatio: 0, //드래그 금지
-    speed: 500,
-    slidesToShow: 1,
-    slidesPerRow: 2,
-    arrows: true,
-    draggable: false,
-
-    appendDots: (dots: any) => (
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: "10px",
-        }}
-      >
-        <ul> {dots} </ul>
-      </div>
-    ),
-    dotsClass: "dots_custom",
-  };
+  // 슬라이더 설정을 useMemo로 메모이제이션
+  const settings = useMemo(
+    () => ({
+      dots: true,
+      infinite: true,
+      touchRatio: 0, // 드래그 금지
+      speed: 500,
+      slidesToShow: 1,
+      slidesPerRow: 2,
+      arrows: true,
+      draggable: false,
+      appendDots: (dots: any) => (
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "10px",
+          }}
+        >
+          <ul> {dots} </ul>
+        </div>
+      ),
+      dotsClass: "dots_custom",
+    }),
+    []
+  );
 
   // PlayerItem에서 수정된 가사를 받아서 서버로 보내는 함수
-  const handleLyricChange = (index: number, newLyric: string) => {
-    console.log(newLyric);
-    mutation.mutate({
-      itemId: itemId,
-      segmentOrder: index,
-      newLyric: newLyric,
-    });
-  };
+  const handleLyricChange = useCallback(
+    (index: number, newLyric: string) => {
+      mutation.mutate({
+        itemId: itemId,
+        segmentOrder: index,
+        newLyric: newLyric,
+      });
+    },
+    [itemId]
+  );
 
   const mutation = useMutation({
     mutationFn: async ({

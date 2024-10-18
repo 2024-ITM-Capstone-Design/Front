@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import CreateLayout from "../../components/Common/CreateLayout";
@@ -25,47 +25,49 @@ function FileUpload() {
   const [lyric, setLyric] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const goToNextPage = async () => {
+  //goToNextPage 함수는 여러 상태값에 의존하므로 useCallback을 사용해 불필요한 재생성을 방지
+  const goToNextPage = useCallback(async () => {
     if (isLoading) return; // 이미 로딩 중이라면 중복 클릭 방지
 
     setIsLoading(true); // 로딩 시작
 
-    //오디오 파일 길이 계산 api 호출
-    const duration = await getBlobDuration(file!);
-    console.log(menu, title, lyric, userData.id!);
+    try {
+      //오디오 파일 길이 계산 api 호출
+      const duration = await getBlobDuration(file!);
 
-    // 유저 입력 데이터 등록 api 호출
-    const itemId = await sendUserInput(
-      menu,
-      title,
-      lyric,
-      userData.id!,
-      Math.floor(duration)
-    );
+      // 유저 입력 데이터 등록 api 호출
+      const itemId = await sendUserInput(
+        menu,
+        title,
+        lyric,
+        userData.id!,
+        Math.floor(duration)
+      );
 
-    if (itemId) {
-      //presigned URL 발급
-      const url = await getPresignedUrl(file!.name, itemId);
-      if (url) {
-        //오디오 파일 S3 업로드 api 요청
-        await uploadAudioToS3(file!, url);
-        //파일 업로드 확인 및 오디오 분할 요청
-        const res = await endUpload(itemId);
+      if (itemId) {
+        //presigned URL 발급
+        const url = await getPresignedUrl(file!.name, itemId);
+        if (url) {
+          //오디오 파일 S3 업로드 api 요청
+          await uploadAudioToS3(file!, url);
+          //파일 업로드 확인 및 오디오 분할 요청
+          const res = await endUpload(itemId);
 
-        if (res?.status === 200) {
-          if (menu === "ONE") {
-            //단일 이미지 생성 로직 api 호출
-            //성공 시 분석결과 확인 페이지 이동
-            navigate(`/create/analysis-result/${itemId}`);
-          } else {
-            //단일+여러 이미지 생성 로직 api 호출
-            // 가사 추출 조회&편집 페이지 이동
-            navigate(`/create/check-lyric/${itemId}`);
+          if (res?.status === 200) {
+            if (menu === "ONE") {
+              navigate(`/create/analysis-result/${itemId}`);
+            } else {
+              navigate(`/create/check-lyric/${itemId}`);
+            }
           }
         }
       }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    } finally {
+      setIsLoading(false); // 로딩 종료
     }
-  };
+  }, [file, title, lyric, menu, userData.id!, isLoading, navigate]);
 
   return (
     <CreateLayout currentStep={1}>

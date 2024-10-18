@@ -68,7 +68,7 @@ function ProtogonistForm({ register }: { register: any }) {
   );
 }
 
-export default ProtogonistForm;
+export default React.memo(ProtogonistForm);
 
 const Container = styled.div`
   ${tw`w-[669px] h-[406px] flex p-4 items-center gap-[20px] border-[1px] border-subGray rounded-[5px] mt-5 font-display`}

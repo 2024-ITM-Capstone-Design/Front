@@ -3,12 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import tw from "twin.macro";
 import styled from "styled-components";
-import img1 from "../../assets/Dummy/dummyImg.png";
-import img2 from "../../assets/Dummy/image2.png";
-import img3 from "../../assets/Dummy/image3.png";
-import img4 from "../../assets/Dummy/image4.png";
-import img5 from "../../assets/Dummy/image5.png";
-import img6 from "../../assets/Dummy/image6.png";
+
 import { useEffect, useRef, useState } from "react";
 
 function ImgSlider({

@@ -9,9 +9,44 @@ import img3 from "../../assets/Dummy/image3.png";
 import img4 from "../../assets/Dummy/image4.png";
 import img5 from "../../assets/Dummy/image5.png";
 import img6 from "../../assets/Dummy/image6.png";
+import { useEffect, useRef, useState } from "react";
 
-function ImgSlider() {
-  const DummyImgs = [img1, img2, img3, img4, img5, img6];
+function ImgSlider({
+  type,
+  images,
+  currentTime,
+}: {
+  type: string;
+  images: string[];
+  currentTime: number;
+}) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const slideRef = useRef<Slider | null>();
+
+  useEffect(() => {
+    if (type === "MANY") {
+      // 36초마다 이미지 변경
+      const newIndex = Math.floor(currentTime / 36);
+      if (newIndex !== activeIndex) {
+        setActiveIndex(newIndex);
+      }
+    } else if (type === "BOTH") {
+      // currentTime이 0이면 첫 번째 이미지만 보여줌
+      if (currentTime === 0) {
+        setActiveIndex(0);
+      } else {
+        // currentTime이 0 이상이면 두 번째 이미지부터 36초마다 변경
+        const newIndex = Math.floor(currentTime / 36) + 1;
+        if (newIndex !== activeIndex) {
+          setActiveIndex(newIndex);
+        }
+      }
+    }
+  }, [currentTime, type, activeIndex]);
+
+  useEffect(() => {
+    goToNextIndex();
+  }, [activeIndex]); // activeIndex가 변경될 때 슬라이더 업데이트
 
   const settings = {
     dots: true,
@@ -22,8 +57,7 @@ function ImgSlider() {
     slidesPerRow: 1,
     arrows: false,
     draggable: false,
-    autoplay: true,
-    autoplaySpeed: 36000,
+    // autoplay: true,
 
     appendDots: (dots: any) => (
       <div
@@ -39,17 +73,17 @@ function ImgSlider() {
       </div>
     ),
     dotsClass: "dots_custom",
-    afterChange: (index: number) => {
-      if (index === DummyImgs.length - 1) {
-        settings.autoplay = false;
-      }
-    },
+  };
+  const goToNextIndex = () => {
+    if (slideRef.current) {
+      slideRef.current.slickGoTo(activeIndex);
+    }
   };
 
   return (
     <SliderBox>
-      <Slider {...settings}>
-        {DummyImgs.map((data, index) => (
+      <Slider ref={(slider) => (slideRef.current = slider)} {...settings}>
+        {images.map((data, index) => (
           <div key={index} className="text-center m-auto">
             <ImgContainer src={data} />
           </div>

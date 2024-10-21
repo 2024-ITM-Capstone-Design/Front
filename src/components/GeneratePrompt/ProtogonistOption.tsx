@@ -3,23 +3,26 @@ import tw from "twin.macro";
 import styled from "styled-components";
 
 type OptionProps = {
-  selectedOption: string | null;
-  setSelectedOption: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedPromptOption: string;
+  setSelectedPromptOption: React.Dispatch<React.SetStateAction<string>>;
 };
-function ProtogonistOption({ selectedOption, setSelectedOption }: OptionProps) {
+function ProtogonistOption({
+  selectedPromptOption,
+  setSelectedPromptOption,
+}: OptionProps) {
   return (
     <OptionBox>
       <OptionBtn
-        $active={selectedOption === "AUTO"}
+        $active={selectedPromptOption === "AUTO"}
         option="left"
-        onClick={() => setSelectedOption("AUTO")}
+        onClick={() => setSelectedPromptOption("AUTO")}
       >
         automatically
       </OptionBtn>
       <OptionBtn
-        $active={selectedOption === "CUSTOM"}
+        $active={selectedPromptOption === "CUSTOM"}
         option="right"
-        onClick={() => setSelectedOption("CUSTOM")}
+        onClick={() => setSelectedPromptOption("CUSTOM")}
       >
         manually
       </OptionBtn>

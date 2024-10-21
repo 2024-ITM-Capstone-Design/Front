@@ -18,7 +18,7 @@ function NavBar({ menu }: MenuProps) {
 
   const handleLogin = useCallback(() => {
     const API_KEY = process.env.REACT_APP_REST_API_KEY;
-    const REDIRECT_URI = "http://localhost:3000/redirect";
+    const REDIRECT_URI = `${process.env.REACT_APP_BASE_URL}/redirect`;
     const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     window.location.href = KAKAO_AUTH_URI;
   }, []);

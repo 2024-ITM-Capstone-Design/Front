@@ -148,7 +148,7 @@ function ViewGraph({ graphData }: { graphData: any }) {
 export default ViewGraph;
 
 const Container = styled.div`
-  ${tw`w-[481px] h-[280px] flex flex-col items-start bg-black rounded-[16px] py-4  px-3 drop-shadow-[ 0px 4px 4px rgba(0, 0, 0, 0.4)]`}
+  ${tw`w-3/5 max-w-[481px] h-[280px] flex flex-col items-start bg-black rounded-[16px] py-4  px-3 drop-shadow-[ 0px 4px 4px rgba(0, 0, 0, 0.4)]`}
 
   .text-md {
     ${tw`font-display font-medium text-mint text-base mb-1`}

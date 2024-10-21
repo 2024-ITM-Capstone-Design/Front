@@ -8,6 +8,8 @@ import ProtogonistOption from "../../components/GeneratePrompt/ProtogonistOption
 import NextButton from "../../components/Common/NextButton";
 import ProtogonistForm from "../../components/GeneratePrompt/ProtogonistForm";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { sendImageOption } from "../../api/create";
+import { useNavigate, useParams } from "react-router-dom";
 
 type FormValues = {
   AGE: string;
@@ -20,36 +22,57 @@ type FormValues = {
   FEATURES: string;
 };
 function GeneratePrompt() {
-  const [selectedImageOption, setSelectedImageOption] = useState<string | null>(
-    null
-  );
-  const [selectedPromptOption, setSelectedPromptOption] = useState<
-    string | null
-  >(null);
+  const navigate = useNavigate();
+  const [selectedImageOption, setSelectedImageOption] = useState<string>("");
+  const [selectedPromptOption, setSelectedPromptOption] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { itemId } = useParams() as { itemId: string };
+  const { register, handleSubmit, watch } = useForm<FormValues>();
 
-  const { register, handleSubmit, getValues, watch } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = useCallback(
-    (data) => {
+    async (data) => {
       console.log("Form Data:", data);
-      console.log("Selected Image Option:", selectedImageOption);
-      console.log("Selected Protagonist Option:", selectedPromptOption);
+      setIsLoading(true);
+
+      const isAutomatic = selectedPromptOption === "AUTO";
+      let script = "";
+
       if (selectedPromptOption === "CUSTOM") {
-        let script = `Age: ${data.AGE} Gender: ${data.GENDER} 
-      Physical Appearance: 
-      - Eye color: ${data.EYE_COLOR}
-      - Hair: ${data.HAIR}
-      - Skin tone: ${data.SKIN_TONE}
-      - Facial features: ${data.FEATURES}
-      Clothing:
-      - Style: ${data.STYLE}
-      - Color: ${data.COLOR_SCHEME}`;
+        script = `Age: ${data.AGE} Gender: ${data.GENDER} Physical Appearance:  Eye color: ${data.EYE_COLOR} , Hair: ${data.HAIR}, Skin tone: ${data.SKIN_TONE},  Facial features: ${data.FEATURES}
+          Clothing: Style: ${data.STYLE}, Color: ${data.COLOR_SCHEME} `;
         console.log(script);
+      }
+
+      // 선택된 옵션 값이 있을 때만 API 호출
+      if (selectedImageOption && selectedPromptOption) {
+        const res = await sendImageOption(
+          itemId,
+          selectedImageOption,
+          isAutomatic,
+          script
+        );
+
+        if (res) {
+          // let type = "ONE";
+          // if (res.audioDownloadUrl.length > 0) {
+          //   type = "MANY";
+          // }
+          navigate(`/create/view-result/${itemId}`, {
+            state: {
+              imageDownloadUrl: res.imageDownloadUrl,
+              audioDownloadUrl: res.audioDownloadUrl,
+              audioName: res.audioName,
+              duration: res.duration,
+              type: res.type,
+            },
+          });
+        }
       }
     },
     [selectedImageOption, selectedPromptOption]
   );
 
-  const checkValues = useMemo(() => {
+  const checkValues = () => {
     if (selectedPromptOption === "CUSTOM") {
       const {
         AGE,
@@ -62,6 +85,7 @@ function GeneratePrompt() {
         FEATURES,
       } = watch();
       return (
+        selectedImageOption === "" ||
         !AGE ||
         !GENDER ||
         !STYLE ||
@@ -71,10 +95,9 @@ function GeneratePrompt() {
         !SKIN_TONE ||
         !FEATURES
       );
-    } else {
-      return !selectedImageOption || !selectedPromptOption;
     }
-  }, [selectedPromptOption, selectedImageOption, watch]);
+    return selectedImageOption === "" || selectedPromptOption === "";
+  };
   return (
     <CreateLayout currentStep={3}>
       <ContentWrapper>
@@ -94,8 +117,8 @@ function GeneratePrompt() {
             the vibe of your music
           </span>
           <ImageStyle
-            selectedOption={selectedImageOption}
-            setSelectedOption={setSelectedImageOption}
+            selectedImageOption={selectedImageOption}
+            setSelectedImageOption={setSelectedImageOption}
           />
 
           <div className="h-7"></div>
@@ -110,12 +133,11 @@ function GeneratePrompt() {
           </span>
 
           <ProtogonistOption
-            selectedOption={selectedPromptOption}
-            setSelectedOption={setSelectedPromptOption}
+            selectedPromptOption={selectedPromptOption}
+            setSelectedPromptOption={setSelectedPromptOption}
           />
 
           {/* 주인공 설정 폼 */}
-
           <form>
             {selectedPromptOption === "CUSTOM" && (
               <ProtogonistForm register={register} />
@@ -123,12 +145,17 @@ function GeneratePrompt() {
           </form>
         </Container>
       </ContentWrapper>
+
       <NextButton
         type="submit"
         onClick={handleSubmit(onSubmit)}
-        disabled={checkValues}
+        disabled={checkValues() || isLoading}
       >
-        Next →
+        {isLoading ? (
+          <div className="w-7 h-7 border-4 border-t-gray border-subGray rounded-full animate-spin"></div>
+        ) : (
+          "Next →"
+        )}
       </NextButton>
     </CreateLayout>
   );

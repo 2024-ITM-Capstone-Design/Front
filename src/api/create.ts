@@ -1,4 +1,5 @@
 import { axiosInstance } from ".";
+import { ResultData } from "../type/result";
 export const sendUserInput = async (
   type: string,
   audioName: string,
@@ -75,8 +76,37 @@ export const reviseLyric = async (
 
 export const getAnalysisResult = async (itemId: string) => {
   try {
-    const res = await axiosInstance.get(`api/analysis/${itemId}`);
+    const res = await axiosInstance.get(`/api/analysis/${itemId}`);
 
+    if (res) {
+      return res.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const sendImageOption = async (
+  itemId: string,
+  imageStyle: string,
+  isAutomatic: boolean,
+  characterStyle?: string
+) => {
+  try {
+    const body = isAutomatic
+      ? {
+          imageStyle: imageStyle,
+          isAutomatic: isAutomatic,
+        }
+      : {
+          imageStyle: imageStyle,
+          isAutomatic: isAutomatic,
+          characterStyle: characterStyle,
+        };
+    const res = await axiosInstance.post<ResultData>(
+      `/api/image/create/${itemId}`,
+      body
+    );
     if (res) {
       return res.data;
     }

@@ -122,7 +122,7 @@ function CheckLyric() {
             </Slider>
           </ItemBox>
         </ContentWrapper>
-        <NextButton onClick={handleNext} />
+        <NextButton onClick={handleNext}>Next → </NextButton>
       </CreateLayout>
     );
   } else {
@@ -150,5 +150,5 @@ const ContentWrapper = styled.div`
   }
 `;
 const ItemBox = styled.div`
-  ${tw`w-[750px] mt-5 mx-auto`}
+  ${tw`w-[95%] max-w-[750px] mt-5 mx-auto`}
 `;

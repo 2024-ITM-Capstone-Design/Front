@@ -124,7 +124,7 @@ function ViewMood({ type, duration, mood }: MoodProps) {
 
 export default ViewMood;
 const Container = styled.div`
-  ${tw`w-[300px] h-[280px] flex flex-col items-start bg-black rounded-[16px] py-4 px-3 drop-shadow-[ 0px 4px 4px rgba(0, 0, 0, 0.4)]`}
+  ${tw`w-2/5 max-w-[300px] h-[280px] flex flex-col items-start bg-black rounded-[16px] py-4 px-3 drop-shadow-[ 0px 4px 4px rgba(0, 0, 0, 0.4)]`}
 
   .text-md {
     ${tw`w-full text-start font-display font-medium text-mint text-base mb-1`}

@@ -2,10 +2,13 @@ import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 type OptionProps = {
-  selectedOption: string | null;
-  setSelectedOption: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedImageOption: string;
+  setSelectedImageOption: React.Dispatch<React.SetStateAction<string>>;
 };
-function ImageStyleOption({ selectedOption, setSelectedOption }: OptionProps) {
+function ImageStyleOption({
+  selectedImageOption,
+  setSelectedImageOption,
+}: OptionProps) {
   const categories = [
     {
       id: "WATERCOLOR",
@@ -54,8 +57,8 @@ function ImageStyleOption({ selectedOption, setSelectedOption }: OptionProps) {
       {categories.map((category, index) => (
         <OptionBtn
           key={index}
-          $active={selectedOption === category.id}
-          onClick={() => setSelectedOption(category.id)}
+          $active={selectedImageOption === category.id}
+          onClick={() => setSelectedImageOption(category.id)}
         >
           {category.label}
         </OptionBtn>

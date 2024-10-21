@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import * as P from "../styles/progress.style";
+
 import TickIcon from "../assets/icons/tick-icon";
 import DotIcon from "../assets/icons/dot";
+import tw from "twin.macro";
+import styled, { keyframes, css } from "styled-components";
 
 type ProgressProps = {
   currentStep: number;
@@ -25,50 +27,54 @@ function Progress({ currentStep }: ProgressProps) {
   }) => {
     if (status === "before") {
       return (
-        <P.StatusIcon status="before" animate={animate}>
+        <StatusIcon status="before" $animate={animate}>
           <DotIcon width={8} height={8} />
-        </P.StatusIcon>
+        </StatusIcon>
       );
     } else if (status === "present") {
       return (
-        <P.StatusIcon status="present" animate={animate}>
+        <StatusIcon status="present" $animate={animate}>
           <DotIcon width={8} height={8} />
-        </P.StatusIcon>
+        </StatusIcon>
       );
     } else {
       return (
-        <P.StatusIcon status="after" animate={animate}>
+        <StatusIcon status="after" $animate={animate}>
           <TickIcon width={13} height={11} color={"#FFFFFF"} />
-        </P.StatusIcon>
+        </StatusIcon>
       );
     }
   };
 
-  const steps = [0, 1, 2, 3]; // 총 4단계
+  const steps = [0, 1, 2, 3, 4]; // 총 4단계
   const steps_name = [
     {
-      label: "서비스 선택",
-      text: "생성 서비스를 원하는 카테고리를 선택해주세요.",
+      label: "Service Selection",
+      text: "Select the category for the service you want.",
     },
     {
-      label: "파일 업로드 및 세부정보 입력",
-      text: "오디오 파일을 업로드하고, 세부정보를 입력해주세요.",
-    },
-
-    {
-      label: "분석결과 확인 및 최종 생성",
-      text: "분석결과를 확인하고, 프롬프트를 최종수정해주세요.",
+      label: "Upload File & Enter Details",
+      text: "Upload your audio file and enter details.",
     },
     {
-      label: "생성결과 확인",
-      text: "생성된 결과를 확인하고 다운로드 하세요.",
+      label: "Discover Music Insights",
+      text: "Explore the emotional characteristics of your song.",
+    },
+    {
+      label: "Generate Image Prompt",
+      text: "Create the final prompt for generating images.",
+    },
+    {
+      label: "View & Download",
+      text: "View and download the generated result.",
     },
   ];
+
   return (
-    <P.Wrapper>
-      <P.ProgressBar>
+    <Wrapper>
+      <ProgressBar>
         {steps.map((step, index) => (
-          <>
+          <div key={index} className="flex flex-col items-center">
             <ViewStatus
               status={
                 currentStep > step
@@ -77,23 +83,89 @@ function Progress({ currentStep }: ProgressProps) {
                   ? "present"
                   : "before"
               }
+              key={index}
             />
             {index < steps.length - 1 && (
-              <P.Line key={`line-${index}`} active={currentStep > step} />
+              <Line key={`line-${index}`} $active={currentStep > step} />
             )}
-          </>
+          </div>
         ))}
-      </P.ProgressBar>
-      <P.StepBar>
+      </ProgressBar>
+      <StepBar>
         {steps_name.map((step, index) => (
-          <div className="step-box">
+          <div className="step-box" key={index}>
             <span className="main-text">{step.label}</span>
             <span className="sub-text">{step.text}</span>
           </div>
         ))}
-      </P.StepBar>
-    </P.Wrapper>
+      </StepBar>
+    </Wrapper>
   );
 }
 
-export default Progress;
+export default React.memo(Progress);
+
+// 애니메이션 정의
+const statusChange = keyframes`
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+`;
+
+const Wrapper = styled.div`
+  ${tw`h-[335px] bg-gray [border-radius: 15px] flex flex-row p-1 pr-3`}
+`;
+
+const StepBar = styled.div`
+  ${tw`flex flex-col h-[260px] justify-between ml-4 mt-8`}
+  .step-box {
+    ${tw`flex flex-col`}
+    .main-text {
+      ${tw`font-display font-medium text-sm text-mainColor`}
+    }
+    .sub-text {
+      ${tw`font-display font-light text-caption text-subGray w-[250px]`}
+    }
+  }
+`;
+const ProgressBar = styled.div`
+  ${tw`flex flex-col items-center w-[24px] h-[240px] justify-between ml-7 mt-9`}
+`;
+
+const StatusIcon = styled.div<{
+  status: "before" | "present" | "after";
+  $animate: boolean;
+}>`
+  ${tw`w-6 h-6 [border-radius: 12px] flex items-center justify-center`}
+
+  background: ${({ status }) => {
+    switch (status) {
+      case "before":
+        return "#FFFFFF";
+      case "present":
+      case "after":
+        return "#8D7EFD";
+      default:
+        return "#FFFFF";
+    }
+  }};
+
+  box-shadow: ${(props) =>
+    props.status === "present" ? " 0px 0px 0px 4px #F2F4F7" : "none"};
+
+  ${({ $animate }) =>
+    $animate &&
+    css`
+      animation: ${statusChange} 0.5s ease-in-out;
+    `}
+`;
+
+const Line = styled.div<{ $active: boolean }>`
+  ${tw`w-0.5 h-8 [border-radius: 2px]`}
+  background: ${(props) => (props.$active ? "#8D7EFD" : "#FFFFFF")};
+`;

@@ -2,7 +2,7 @@ import CreateLayout from "../../components/Common/CreateLayout";
 import tw from "twin.macro";
 import styled from "styled-components";
 import ImgSlider from "../../components/ViewResult/ImgSlider";
-import DummyImg from "../../assets/Dummy/dummyImg.png";
+import CoverImg from "../../assets/Dummy/cover_image.png";
 import { ReactComponent as PlayIcon } from "../../assets/play-icon.svg";
 import { ReactComponent as RepeatIcon } from "../../assets/repeat-icon.svg";
 import { ReactComponent as PauseIcon } from "../../assets/pause-icon.svg";
@@ -13,10 +13,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { formatTime } from "../../utils/format-time";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
+import img0 from "../../assets/Dummy/image.png";
+import img1 from "../../assets/Dummy/image1.png";
+import img2 from "../../assets/Dummy/image2.png";
+import img3 from "../../assets/Dummy/image3.png";
+import img4 from "../../assets/Dummy/image4.png";
+import img5 from "../../assets/Dummy/image5.png";
 
 function ViewResult() {
   const navigate = useNavigate();
-
+  const DummyImgs = [img0, img1, img2, img3, img4, img5];
   const [play, setPlay] = useState<boolean>(false);
   const [playProgress, setPlayProgress] = useState<number>(0); // 진행 바 상태 관리
   const [isDragging, setIsDragging] = useState<boolean>(false); // 드래그 상태 관리
@@ -95,7 +101,7 @@ function ViewResult() {
   // 커버 이미지 다운로드를 위한 함수
   const handleCoverImageDownload = async () => {
     try {
-      const response = await fetch(imageDownloadUrl[0]); // 첫 번째 이미지 URL로 요청
+      const response = await fetch(CoverImg); // 첫 번째 이미지 URL로 요청
       const blob = await response.blob(); // 응답을 Blob으로 변환
 
       const link = document.createElement("a");
@@ -119,8 +125,8 @@ function ViewResult() {
     const imgFolder = zip.folder("section-images");
 
     // 섹션별 이미지 추가 (1번째부터 마지막까지)
-    for (let i = 1; i < imageDownloadUrl.length; i++) {
-      const imageUrl = imageDownloadUrl[i];
+    for (let i = 1; i < DummyImgs.length; i++) {
+      const imageUrl = DummyImgs[i];
       const imageBlob = await fetch(imageUrl).then((res) => res.blob());
       imgFolder?.file(`section-image-${i}.jpg`, imageBlob);
     }
@@ -141,11 +147,11 @@ function ViewResult() {
         <Container>
           <div className="flex flex-row gap-[25px] w-full items-center">
             {type === "ONE" ? (
-              <ImgContainer src={imageDownloadUrl[0]} />
+              <ImgContainer src={CoverImg} />
             ) : (
               <ImgSlider
                 type={type}
-                images={imageDownloadUrl}
+                images={DummyImgs}
                 currentTime={currentTime}
               />
             )}

@@ -213,7 +213,7 @@ function ViewResult() {
           </div>
         </Container>
       </ContentWrapper>
-      <NextButton onClick={() => navigate("/home")}>Terminate →</NextButton>
+      <NextButton onClick={() => navigate("/")}>Terminate →</NextButton>
     </CreateLayout>
   );
 }

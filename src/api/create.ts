@@ -114,3 +114,16 @@ export const sendImageOption = async (
     console.log(error);
   }
 };
+
+export const getResultData = async (itemId: string) => {
+  try {
+    const res = await axiosInstance.get<ResultData>(
+      `/api/image/output/${itemId}`
+    );
+    if (res) {
+      return res.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

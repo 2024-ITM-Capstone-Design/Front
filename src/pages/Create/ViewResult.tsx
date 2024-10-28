@@ -2,111 +2,43 @@ import CreateLayout from "../../components/Common/CreateLayout";
 import tw from "twin.macro";
 import styled from "styled-components";
 import ImgSlider from "../../components/ViewResult/ImgSlider";
-import CoverImg from "../../assets/Dummy/cover_image.png";
-import { ReactComponent as PlayIcon } from "../../assets/play-icon.svg";
-import { ReactComponent as RepeatIcon } from "../../assets/repeat-icon.svg";
-import { ReactComponent as PauseIcon } from "../../assets/pause-icon.svg";
-import { ReactComponent as DownloadIcon } from "../../assets/download-icon.svg";
-import { useEffect, useRef, useState } from "react";
 import NextButton from "../../components/Common/NextButton";
-import { useLocation, useNavigate } from "react-router-dom";
-import { formatTime } from "../../utils/format-time";
+import { useNavigate, useParams } from "react-router-dom";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
-import img0 from "../../assets/Dummy/image.png";
-import img1 from "../../assets/Dummy/image1.png";
-import img2 from "../../assets/Dummy/image2.png";
-import img3 from "../../assets/Dummy/image3.png";
-import img4 from "../../assets/Dummy/image4.png";
-import img5 from "../../assets/Dummy/image5.png";
+import DownloadIcon from "../../assets/icons/download-icon";
+import { useState } from "react";
+import MusicPlaySection from "../../components/ViewResult/MusicPlaySection";
+import { useQuery } from "@tanstack/react-query";
+import { getResultData } from "../../api/create";
 
 function ViewResult() {
   const navigate = useNavigate();
-  const DummyImgs = [img0, img1, img2, img3, img4, img5];
-  const [play, setPlay] = useState<boolean>(false);
-  const [playProgress, setPlayProgress] = useState<number>(0); // 진행 바 상태 관리
-  const [isDragging, setIsDragging] = useState<boolean>(false); // 드래그 상태 관리
+  const { itemId } = useParams() as { itemId: string };
   const [currentTime, setCurrentTime] = useState<number>(0); // 오디오 현재 시간 상태 추가
-  const progressRef = useRef<HTMLDivElement>(null); // progress bar 참조
-  const location = useLocation();
-  const { imageDownloadUrl, audioDownloadUrl, audioName, type, duration } =
-    location.state;
 
-  const audioRef = useRef<HTMLAudioElement>(audioDownloadUrl); // 오디오 엘리먼트를 참조
-
-  useEffect(() => {
-    if (audioRef.current) {
-      const handleTimeUpdate = () => {
-        const time = Math.floor(audioRef.current?.currentTime || 0);
-        setCurrentTime(time);
-        setPlayProgress((time / duration) * 100); // 진행 바 업데이트
-      };
-
-      audioRef.current.addEventListener("timeupdate", handleTimeUpdate);
-
-      return () => {
-        if (audioRef.current) {
-          audioRef.current.removeEventListener("timeupdate", handleTimeUpdate); // 이벤트 리스너 해제
-        }
-      };
-    }
-  }, [audioRef]);
-
-  const handlePlay = () => {
-    console.log(audioRef.current);
-    if (audioRef.current) {
-      if (play) {
-        audioRef.current.pause(); // 오디오 중지
-      } else {
-        audioRef.current.play(); // 오디오 재생
-      }
-      setPlay(!play);
-    }
-  };
-
-  // 드래그 시작
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    updateProgress(e);
-  };
-
-  // 드래그 중
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging) {
-      updateProgress(e);
-    }
-  };
-
-  // 드래그 종료
-  const handleMouseUp = (e: React.MouseEvent) => {
-    if (isDragging) {
-      updateProgress(e);
-      setIsDragging(false);
-    }
-  };
-
-  // 진행 바 업데이트 함수
-  const updateProgress = (e: React.MouseEvent) => {
-    if (progressRef.current && audioRef.current) {
-      const rect = progressRef.current.getBoundingClientRect();
-      const offsetX = e.clientX - rect.left; // 클릭한 X 좌표 계산
-      const newProgress = Math.max(0, Math.min(1, offsetX / rect.width)); // 진행 바 퍼센트 계산 (0-1 사이)
-      const newCurrentTime = newProgress * duration; // 새로운 currentTime 계산
-      setPlayProgress(newProgress * 100); // 진행 바 퍼센트 업데이트
-      setCurrentTime(newCurrentTime); // currentTime 업데이트
-      audioRef.current.currentTime = newCurrentTime; // 오디오 재생 위치 업데이트
-    }
-  };
+  // Query to fetch analysis result
+  const { data, isLoading } = useQuery({
+    queryKey: ["getImageOutput", itemId],
+    queryFn: () => getResultData(itemId),
+  });
 
   // 커버 이미지 다운로드를 위한 함수
-  const handleCoverImageDownload = async () => {
+  const handleCoverImageDownload = async (
+    imageDownloadUrl: string[],
+    audioName: string
+  ) => {
     try {
-      const response = await fetch(CoverImg); // 첫 번째 이미지 URL로 요청
+      const response = await fetch(imageDownloadUrl[0], {
+        headers: {
+          "Cache-Control": "no-cache",
+        },
+      }); // 첫 번째 이미지 URL로 요청
       const blob = await response.blob(); // 응답을 Blob으로 변환
 
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob); // Blob 객체를 URL로 변환
-      link.download = `${audioName}-cover-image.jpg`; // 파일명 지정
+      link.download = `${audioName}-cover-image.png`; // 파일명 지정
       document.body.appendChild(link);
       link.click(); // 다운로드 트리거
       document.body.removeChild(link);
@@ -118,104 +50,110 @@ function ViewResult() {
     }
   };
 
-  //섹션별 이미지 다운로드를 위한 함수
-  const handleSectionImagesDownload = async () => {
-    // JSZip을 사용하여 섹션별 이미지를 압축
+  const handleSectionImagesDownload = async (
+    type: string,
+    imageDownloadUrl: string[],
+    audioName: string
+  ) => {
+    // 섹션별 이미지 압축용 폴더 생성
     const zip = new JSZip();
     const imgFolder = zip.folder("section-images");
 
-    // 섹션별 이미지 추가 (1번째부터 마지막까지)
-    for (let i = 1; i < DummyImgs.length; i++) {
-      const imageUrl = DummyImgs[i];
-      const imageBlob = await fetch(imageUrl).then((res) => res.blob());
-      imgFolder?.file(`section-image-${i}.jpg`, imageBlob);
-    }
+    // i 초기화 (MANY 타입이면 0부터, 아니면 1부터 시작)
+    let i = 0;
+    type === "MANY" ? (i = 0) : (i = 1);
+
+    // Promise.all을 통해 비동기적으로 이미지들을 병렬 다운로드
+    const imagePromises = imageDownloadUrl
+      .slice(i)
+      .map(async (imageUrl, index) => {
+        try {
+          const response = await fetch(imageUrl, {
+            headers: {
+              "Cache-Control": "no-cache",
+            },
+          });
+          if (!response.ok) throw new Error(`Failed to fetch image ${index}`);
+          const imageBlob = await response.blob();
+          imgFolder!.file(`section-image-${index + 1}.png`, imageBlob); // 각 파일을 올바른 이름으로 추가
+        } catch (error) {
+          console.error(`Image ${index + 1} download failed:`, error);
+        }
+      });
+
+    // 모든 이미지가 다운로드되고 zip에 추가될 때까지 기다림
+    await Promise.all(imagePromises);
 
     // ZIP 파일 생성 및 다운로드
     zip.generateAsync({ type: "blob" }).then((content) => {
       saveAs(content, `${audioName}-section-images.zip`); // 파일명 지정 및 다운로드
     });
   };
-
-  return (
-    <CreateLayout currentStep={4}>
-      <ContentWrapper>
-        <span className="title-md">View & Download</span>
-        <span className="text-sm">
-          Image generation is complete! Check out the results now.
-        </span>
-        <Container>
-          <div className="flex flex-row gap-[25px] w-full items-center">
-            {type === "ONE" ? (
-              <ImgContainer src={CoverImg} />
-            ) : (
-              <ImgSlider
-                type={type}
-                images={DummyImgs}
-                currentTime={currentTime}
-              />
-            )}
-            <MusicPlaySection>
-              <span className="song-title">{audioName}</span>
-              <div className="flex flex-row gap-2">
-                {play ? (
-                  <PauseIcon onClick={handlePlay} />
-                ) : (
-                  <PlayIcon onClick={handlePlay} />
-                )}
-                <RepeatIcon
-                  onClick={() => {
-                    setCurrentTime(0);
-                    audioRef.current.currentTime = 0;
-                    setPlayProgress(0);
-                    setPlay(true);
-                    audioRef.current.play();
-                  }}
+  if (!isLoading && data) {
+    return (
+      <CreateLayout currentStep={4}>
+        <ContentWrapper>
+          <span className="title-md">View & Download</span>
+          <span className="text-sm">
+            Image generation is complete! Check out the results now.
+          </span>
+          <Container>
+            <div className="flex flex-row gap-[25px] w-full items-center">
+              {data.type === "ONE" ? (
+                <ImgContainer src={data.imageDownloadUrl[0]} />
+              ) : (
+                <ImgSlider
+                  type={data.type}
+                  images={data.imageDownloadUrl}
+                  currentTime={currentTime}
                 />
-              </div>
-              <PlayProgressContainer
-                ref={progressRef}
-                progress={playProgress}
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={() => setIsDragging(false)}
-              >
-                <div className="progress-filled"></div>
-              </PlayProgressContainer>
-              <div className="w-full flex flex-row justify-between">
-                <span className="time-label">{formatTime(currentTime)}</span>
-                <span className="time-label">{formatTime(duration)}</span>
-              </div>
-              {/* 오디오 엘리먼트 추가 */}
-              <audio ref={audioRef} src={audioDownloadUrl} />
-            </MusicPlaySection>
-          </div>
-          <div className="w-full flex flex-row gap-[10px] justify-center ">
-            {type != "MANY" && (
-              <button
-                className="download-btn"
-                onClick={handleCoverImageDownload}
-              >
-                Download Cover Image
-                <DownloadIcon />
-              </button>
-            )}
-            {type != "ONE" && (
-              <button
-                className="download-btn"
-                onClick={handleSectionImagesDownload}
-              >
-                Download Section Images
-                <DownloadIcon />
-              </button>
-            )}
-          </div>
-        </Container>
-      </ContentWrapper>
-      <NextButton onClick={() => navigate("/")}>Terminate →</NextButton>
-    </CreateLayout>
-  );
+              )}
+              <MusicPlaySection
+                audioDownloadUrl={data.audioDownloadUrl}
+                setCurrentTime={setCurrentTime}
+                duration={data.duration}
+                audioName={data.audioName}
+              />
+            </div>
+            <div className="w-full flex flex-row gap-[10px] justify-center ">
+              {data.type != "MANY" && (
+                <button
+                  className="download-btn"
+                  onClick={() =>
+                    handleCoverImageDownload(
+                      data.imageDownloadUrl,
+                      data.audioName
+                    )
+                  }
+                >
+                  Download Cover Image
+                  <DownloadIcon />
+                </button>
+              )}
+              {data.type != "ONE" && (
+                <button
+                  className="download-btn"
+                  onClick={() =>
+                    handleSectionImagesDownload(
+                      data.type,
+                      data.imageDownloadUrl,
+                      data.audioName
+                    )
+                  }
+                >
+                  Download Section Images
+                  <DownloadIcon />
+                </button>
+              )}
+            </div>
+          </Container>
+        </ContentWrapper>
+        <NextButton onClick={() => navigate("/")}>Terminate →</NextButton>
+      </CreateLayout>
+    );
+  } else {
+    return <div></div>;
+  }
 }
 
 export default ViewResult;
@@ -241,24 +179,4 @@ const Container = styled.div`
 
 const ImgContainer = styled.img`
   ${tw`w-[290px] h-[290px] rounded-[20px] mb-5`}
-`;
-
-const MusicPlaySection = styled.div`
-  ${tw`w-full flex flex-col items-start`}
-  .song-title {
-    ${tw`font-display font-semibold text-xl text-white mb-[30px]`}
-  }
-  .time-label {
-    ${tw`font-display font-light text-subGray text-sm `}
-  }
-`;
-
-const PlayProgressContainer = styled.div<{ progress: number }>`
-  ${tw`relative w-full h-[5px] rounded-[4px] bg-[#000000] mt-[20px] mb-2`}
-
-  .progress-filled {
-    ${tw` h-full rounded-[4px] bg-mainColor`}
-
-    width: ${({ progress }) => `${progress}%`};
-  }
 `;

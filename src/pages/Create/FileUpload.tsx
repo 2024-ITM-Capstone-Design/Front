@@ -16,7 +16,6 @@ function FileUpload() {
   const navigate = useNavigate();
 
   const { menu } = location.state;
-  console.log("state", location.state);
 
   const { userData } = useAuthStore();
   //파일 상태관리를 위한 state, 파일이 선택되거나 드롭될때 setFile을 통해 상태 업데이트

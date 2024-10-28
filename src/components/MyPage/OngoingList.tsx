@@ -4,13 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import { viewOngoingMusics } from "../../api/my-page";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
-
+import NoDataIcon from "../../assets/icons/no-data-icon";
 function OngoingList() {
   const { userData } = useAuthStore();
   const navigate = useNavigate();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["getUserInfo"],
+    queryKey: ["viewOngoings"],
     queryFn: () => viewOngoingMusics(userData?.id!),
   });
 
@@ -37,13 +37,11 @@ function OngoingList() {
       navigate(`/create/view-result/${itemId}`);
     }
   };
-  return (
-    <OnGoingItemBox>
-      {!isLoading &&
-        data &&
-        data.length > 0 &&
-        data.map((item: any, index: number) => (
-          <OngoingItem>
+  if (!isLoading && data && data.length > 0) {
+    return (
+      <OnGoingItemBox>
+        {data.map((item: any, index: number) => (
+          <OngoingItem key={index}>
             <span className="title">{item.audioName}</span>
             <span className="hash-tag">{getHashTag(item.type)}</span>
             <hr className="w-full h-[0.5px] bg-[#A7AAB5] border-0 my-2" />
@@ -58,8 +56,18 @@ function OngoingList() {
             </div>
           </OngoingItem>
         ))}
-    </OnGoingItemBox>
-  );
+      </OnGoingItemBox>
+    );
+  } else {
+    return (
+      <div className="w-full flex flex-col items-center my-2">
+        <NoDataIcon width={150} />
+        <span className="font-display font-semibold text-lg text-subGray">
+          There is no ongoing songs.
+        </span>
+      </div>
+    );
+  }
 }
 
 export default OngoingList;

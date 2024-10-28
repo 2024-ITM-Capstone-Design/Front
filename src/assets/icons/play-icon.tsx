@@ -1,11 +1,14 @@
 import React from "react";
-
-function PlayIcon() {
+type IconProps = {
+  width?: number;
+  height?: number;
+};
+function PlayIcon({ width, height }: IconProps) {
   return (
     <div>
       <svg
-        width="10"
-        height="12"
+        width={width ? width : "10"}
+        height={height ? height : "12"}
         viewBox="0 0 10 12"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

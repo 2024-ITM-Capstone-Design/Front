@@ -2,7 +2,7 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import CreateLayout from "../../components/Common/CreateLayout";
 import { ReactComponent as PencilSvg } from "../../assets/pencil.svg";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import ImageStyle from "../../components/GeneratePrompt/ImageStyle";
 import ProtogonistOption from "../../components/GeneratePrompt/ProtogonistOption";
 import NextButton from "../../components/Common/NextButton";
@@ -53,19 +53,7 @@ function GeneratePrompt() {
         );
 
         if (res) {
-          // let type = "ONE";
-          // if (res.audioDownloadUrl.length > 0) {
-          //   type = "MANY";
-          // }
-          navigate(`/create/view-result/${itemId}`, {
-            state: {
-              imageDownloadUrl: res.imageDownloadUrl,
-              audioDownloadUrl: res.audioDownloadUrl,
-              audioName: res.audioName,
-              duration: res.duration,
-              type: res.type,
-            },
-          });
+          navigate(`/create/view-result/${itemId}`);
         }
       }
     },

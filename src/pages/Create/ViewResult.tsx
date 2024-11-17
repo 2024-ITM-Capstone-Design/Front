@@ -11,6 +11,13 @@ import { useState } from "react";
 import MusicPlaySection from "../../components/ViewResult/MusicPlaySection";
 import { useQuery } from "@tanstack/react-query";
 import { getResultData } from "../../api/create";
+import CoverImg from "../../assets/Dummy/cover_image.webp";
+import image from "../../assets/Dummy/image.webp";
+import image1 from "../../assets/Dummy/image1.webp";
+import image2 from "../../assets/Dummy/image2.webp";
+import image3 from "../../assets/Dummy/image3.webp";
+import image4 from "../../assets/Dummy/image4.webp";
+import image5 from "../../assets/Dummy/image5.webp";
 
 function ViewResult() {
   const navigate = useNavigate();
@@ -23,13 +30,15 @@ function ViewResult() {
     queryFn: () => getResultData(itemId),
   });
 
+  const dummyImgs = [CoverImg, image, image1, image2, image3, image4, image5];
+
   // 커버 이미지 다운로드를 위한 함수
   const handleCoverImageDownload = async (
     imageDownloadUrl: string[],
     audioName: string
   ) => {
     try {
-      const response = await fetch(imageDownloadUrl[0], {
+      const response = await fetch(dummyImgs[0], {
         headers: {
           "Cache-Control": "no-cache",
         },
@@ -64,22 +73,20 @@ function ViewResult() {
     type === "MANY" ? (i = 0) : (i = 1);
 
     // Promise.all을 통해 비동기적으로 이미지들을 병렬 다운로드
-    const imagePromises = imageDownloadUrl
-      .slice(i)
-      .map(async (imageUrl, index) => {
-        try {
-          const response = await fetch(imageUrl, {
-            headers: {
-              "Cache-Control": "no-cache",
-            },
-          });
-          if (!response.ok) throw new Error(`Failed to fetch image ${index}`);
-          const imageBlob = await response.blob();
-          imgFolder!.file(`section-image-${index + 1}.png`, imageBlob); // 각 파일을 올바른 이름으로 추가
-        } catch (error) {
-          console.error(`Image ${index + 1} download failed:`, error);
-        }
-      });
+    const imagePromises = dummyImgs.slice(i).map(async (imageUrl, index) => {
+      try {
+        const response = await fetch(imageUrl, {
+          headers: {
+            "Cache-Control": "no-cache",
+          },
+        });
+        if (!response.ok) throw new Error(`Failed to fetch image ${index}`);
+        const imageBlob = await response.blob();
+        imgFolder!.file(`section-image-${index + 1}.png`, imageBlob); // 각 파일을 올바른 이름으로 추가
+      } catch (error) {
+        console.error(`Image ${index + 1} download failed:`, error);
+      }
+    });
 
     // 모든 이미지가 다운로드되고 zip에 추가될 때까지 기다림
     await Promise.all(imagePromises);
@@ -104,7 +111,7 @@ function ViewResult() {
               ) : (
                 <ImgSlider
                   type={data.type}
-                  images={data.imageDownloadUrl}
+                  images={dummyImgs}
                   currentTime={currentTime}
                 />
               )}

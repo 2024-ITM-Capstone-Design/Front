@@ -17,8 +17,8 @@
     "jsx": "react-jsx",
     "types": ["vite/client"],
     "composite": false,
-    "declaration": false
-    // "jsxImportSource": "twin.macro"
+    "declaration": false,
+    "outDir": "dist"
   },
   "include": ["src", "custom.d.ts"]
 }

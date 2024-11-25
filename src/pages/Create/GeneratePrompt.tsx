@@ -1,7 +1,7 @@
 import tw from "twin.macro";
 import styled from "styled-components";
 import CreateLayout from "../../components/Common/CreateLayout";
-import { ReactComponent as PencilSvg } from "../../assets/pencil.svg";
+import PencilSvg from "../../assets/pencil.svg?react";
 import { useCallback, useState } from "react";
 import ImageStyle from "../../components/GeneratePrompt/ImageStyle";
 import ProtogonistOption from "../../components/GeneratePrompt/ProtogonistOption";

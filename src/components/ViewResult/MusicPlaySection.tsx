@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { ReactComponent as PlayIcon } from "../../assets/play-icon.svg";
-import { ReactComponent as RepeatIcon } from "../../assets/repeat-icon.svg";
-import { ReactComponent as PauseIcon } from "../../assets/pause-icon.svg";
+import PlayIcon from "../../assets/play-icon.svg?react";
+import RepeatIcon from "../../assets/repeat-icon.svg?react";
+import PauseIcon from "../../assets/pause-icon.svg?react";
 import { formatTime } from "../../utils/format-time";
 //노래를 전달받아 재생할 수 있는 뮤직플레이 컴포넌트
 

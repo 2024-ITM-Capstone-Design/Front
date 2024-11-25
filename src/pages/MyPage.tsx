@@ -3,8 +3,6 @@ import NavBar from "../components/Common/NavBar";
 import tw from "twin.macro";
 import styled from "styled-components";
 import DefaultProfileImg from "../assets/default-profile.png";
-
-import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "../store/useAuthStore";
 import OngoingList from "../components/MyPage/OngoingList";
 import CompletedItemList from "../components/MyPage/CompletedItemList";

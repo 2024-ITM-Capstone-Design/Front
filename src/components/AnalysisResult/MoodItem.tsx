@@ -1,8 +1,6 @@
-import React from "react";
-
 import tw from "twin.macro";
 import styled from "styled-components";
-import { ReactComponent as Timer } from "../../assets/timer.svg";
+import Timer from "../../assets/timer.svg?react";
 type ItemProps = {
   time: string;
   imgUrl: string;

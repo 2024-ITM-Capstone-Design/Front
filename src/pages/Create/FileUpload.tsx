@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import CreateLayout from "../../components/Common/CreateLayout";
 import { useLocation, useNavigate } from "react-router-dom";
 import AudioUpload from "../../components/FIleUpload/AudioUpload";
-import { ReactComponent as FileIcon } from "../../assets/file.svg";
+import FileIcon from "../../assets/file.svg?react";
 import DeleteIcon from "../../assets/icons/delete-icon";
 import { endUpload, sendUserInput } from "../../api/create";
 import { useAuthStore } from "../../store/useAuthStore";

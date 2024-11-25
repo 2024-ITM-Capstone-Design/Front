@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as KakaoSignUp } from "../../assets/kakao-sign-in.svg";
+import KakaoSignUp from "../../assets/kakao-sign-in.svg?react";
 import Logo from "../../assets/logo.png";
 import tw from "twin.macro";
 import styled from "styled-components";
@@ -17,8 +17,8 @@ function NavBar({ menu }: MenuProps) {
   const { isLoggedIn } = useAuthStore();
 
   const handleLogin = useCallback(() => {
-    const API_KEY = process.env.REACT_APP_REST_API_KEY;
-    const REDIRECT_URI = `${process.env.REACT_APP_BASE_URL}/redirect`;
+    const API_KEY = import.meta.env.VITE_REST_API_KEY;
+    const REDIRECT_URI = `${import.meta.env.VITE_BASE_URL}/redirect`;
     const KAKAO_AUTH_URI = `https://kauth.kakao.com/oauth/authorize?client_id=${API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     window.location.href = KAKAO_AUTH_URI;
   }, []);

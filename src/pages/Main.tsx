@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import NavBar from "../components/Common/NavBar";
-import { ReactComponent as Oval } from "../assets/oval.svg";
-import { ReactComponent as MainBg } from "../assets/main-bg.svg";
+import Oval from "../assets/oval.svg?react";
+import MainBg from "../assets/main-bg.svg?react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";

@@ -1,8 +1,7 @@
-import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { ResponsiveLine } from "@nivo/line";
-import { ReactComponent as PlayListIcon } from "../../assets/playlist-icon.svg";
+import PlayListIcon from "../../assets/playlist-icon.svg?react";
 function ViewGraph({ graphData }: { graphData: any }) {
   const Dummydata = [
     {

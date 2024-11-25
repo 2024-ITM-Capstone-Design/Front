@@ -1,8 +1,7 @@
 import tw from "twin.macro";
 import styled from "styled-components";
-import { ReactComponent as PlayListIcon } from "../../assets/playlist-icon.svg";
+import PlayListIcon from "../../assets/playlist-icon.svg?react";
 import { formatTime } from "../../utils/format-time";
-
 import Slider from "react-slick"; // 슬라이더 라이브러리 추가
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

@@ -1,8 +1,6 @@
 import React, { ReactNode } from "react";
 import NavBar from "./NavBar";
 import Progress from "../Progress";
-import tw from "twin.macro";
-import styled from "styled-components";
 type LayoutProps = {
   children: ReactNode;
   currentStep: number;

@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import PlayIcon from "../../assets/icons/play-icon";
 import StopIcon from "../../assets/icons/stop-icon";
-import { ReactComponent as Timer } from "../../assets/timer.svg";
+import Timer from "../../assets/timer.svg?react";
 import { formatTime } from "../../utils/format-time";
 
 type PlayerItemProps = {

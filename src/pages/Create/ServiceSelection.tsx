@@ -3,8 +3,8 @@ import CreateLayout from "../../components/Common/CreateLayout";
 import { useNavigate } from "react-router-dom";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { ReactComponent as Camera } from "../../assets/camera.svg";
-import { ReactComponent as Player } from "../../assets/player.svg";
+import Camera from "../../assets/camera.svg?react";
+import Player from "../../assets/player.svg?react";
 import NextButton from "../../components/Common/NextButton";
 function ServiceSelection() {
   const navigate = useNavigate();

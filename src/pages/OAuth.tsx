@@ -5,15 +5,14 @@ import { login } from "../api/user";
 import { useAuthStore } from "../store/useAuthStore";
 function OAuth() {
   const navigate = useNavigate();
-  const { setUserData } = useAuthStore();
   const getToken = async () => {
     const token = new URL(window.location.href).searchParams.get("code");
     const res = axios.post(
       "https://kauth.kakao.com/oauth/token",
       {
         grant_type: "authorization_code",
-        client_id: process.env.REACT_APP_REST_API_KEY,
-        redirect_uri: `${process.env.REACT_APP_BASE_URL}/redirect`,
+        client_id: import.meta.env.VITE_REST_API_KEY,
+        redirect_uri: `${import.meta.env.VITE_BASE_URL}/redirect`,
         code: token,
       },
       {

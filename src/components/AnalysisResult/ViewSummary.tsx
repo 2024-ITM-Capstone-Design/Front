@@ -1,6 +1,6 @@
 import tw from "twin.macro";
 import styled from "styled-components";
-import { ReactComponent as PlayListIcon } from "../../assets/playlist-icon.svg";
+import PlayListIcon from "../../assets/playlist-icon.svg?react";
 type SummaryProps = {
   content: string;
 };

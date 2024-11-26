@@ -1,11 +1,12 @@
 import { useCallback, useState } from "react";
-import CreateLayout from "../../components/Common/CreateLayout";
+
 import { useNavigate } from "react-router-dom";
 import tw from "twin.macro";
 import styled from "styled-components";
 import Camera from "../../assets/camera.svg?react";
 import Player from "../../assets/player.svg?react";
 import NextButton from "../../components/Common/NextButton";
+import CreateLayout from "../../layout/CreateLayout";
 function ServiceSelection() {
   const navigate = useNavigate();
 

@@ -45,6 +45,7 @@ function NavBar({ menu }: MenuProps) {
             navigate("/");
           }}
           width={200}
+          alt="logo"
           loading="lazy"
         />
         {/* <img

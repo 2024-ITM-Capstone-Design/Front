@@ -1,6 +1,6 @@
 import tw from "twin.macro";
 import styled from "styled-components";
-import CreateLayout from "../../components/Common/CreateLayout";
+
 import PencilSvg from "../../assets/pencil.svg?react";
 import { useCallback, useState } from "react";
 import ImageStyle from "../../components/GeneratePrompt/ImageStyle";
@@ -10,6 +10,7 @@ import ProtogonistForm from "../../components/GeneratePrompt/ProtogonistForm";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { sendImageOption } from "../../api/create";
 import { useNavigate, useParams } from "react-router-dom";
+import CreateLayout from "../../layout/CreateLayout";
 
 type FormValues = {
   AGE: string;

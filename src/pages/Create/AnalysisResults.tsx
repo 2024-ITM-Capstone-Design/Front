@@ -1,4 +1,3 @@
-import CreateLayout from "../../components/Common/CreateLayout";
 import { useNavigate, useParams } from "react-router-dom";
 import tw from "twin.macro";
 import styled from "styled-components";
@@ -13,7 +12,8 @@ import {
   processMoodData,
 } from "../../data/ProcessDataComponent";
 import Loader from "../../components/Common/Loader";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
+import CreateLayout from "../../layout/CreateLayout";
 
 type MoodData = {
   type: string;

@@ -15,7 +15,7 @@ function ViewMood({ type, duration, mood }: MoodProps) {
   // 이미지 경로 설정 (동적으로)
   const getImage = (mood: string) => {
     try {
-      return require(`../../assets/mood/${mood}.png`);
+      return require(`../../assets/mood/${mood}.webp`);
     } catch (err) {
       console.error("Image not found:", mood);
       // 이미지가 없는 경우를 위한 기본 이미지

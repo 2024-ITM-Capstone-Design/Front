@@ -1,4 +1,3 @@
-import CreateLayout from "../../components/Common/CreateLayout";
 import tw from "twin.macro";
 import styled from "styled-components";
 import ImgSlider from "../../components/ViewResult/ImgSlider";
@@ -11,6 +10,7 @@ import { useState } from "react";
 import MusicPlaySection from "../../components/ViewResult/MusicPlaySection";
 import { useQuery } from "@tanstack/react-query";
 import { getResultData } from "../../api/create";
+import CreateLayout from "../../layout/CreateLayout";
 
 function ViewResult() {
   const navigate = useNavigate();

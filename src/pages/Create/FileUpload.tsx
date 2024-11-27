@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-import CreateLayout from "../../components/Common/CreateLayout";
+
 import { useLocation, useNavigate } from "react-router-dom";
 import AudioUpload from "../../components/FIleUpload/AudioUpload";
 import FileIcon from "../../assets/file.svg?react";
@@ -11,6 +11,7 @@ import { useAuthStore } from "../../store/useAuthStore";
 import getBlobDuration from "get-blob-duration";
 import { getPresignedUrl, uploadAudioToS3 } from "../../api/file";
 import NextButton from "../../components/Common/NextButton";
+import CreateLayout from "../../layout/CreateLayout";
 function FileUpload() {
   const location = useLocation();
   const navigate = useNavigate();

@@ -56,33 +56,3 @@ code {
 .dots_custom li.slick-active button {
   background-color: #8d7efd;
 }
-
-@font-face {
-  font-family: "Fira Sans Condensed";
-  font-style: normal;
-  font-weight: 400;
-  src: url("/src/assets/fonts/FiraSansCondensed-Italic.woff") format("woff");
-  font-display: swap;
-}
-@font-face {
-  font-family: "Fira Sans Condensed";
-  font-style: normal;
-  font-weight: 500;
-  src: url("/src/assets/fonts/FiraSansCondensed-MediumItalic.woff")
-    format("woff");
-  font-display: swap;
-}
-@font-face {
-  font-family: "Fira Sans Condensed";
-  font-style: normal;
-  font-weight: 600;
-  src: url("FiraSansCondensed-SemiBoldItalic.woff") format("woff");
-  font-display: swap;
-}
-@font-face {
-  font-family: "Fira Sans Condensed";
-  font-style: normal;
-  font-weight: 700;
-  src: url("/src/assets/fonts/FiraSansCondensed-BoldItalic.woff") format("woff");
-  font-display: swap;
-}

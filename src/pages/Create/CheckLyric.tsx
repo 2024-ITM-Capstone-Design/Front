@@ -1,4 +1,3 @@
-import CreateLayout from "../../components/Common/CreateLayout";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +11,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Loader from "../../components/Common/Loader";
 import NextButton from "../../components/Common/NextButton";
 import { useCallback, useMemo } from "react";
+import CreateLayout from "../../layout/CreateLayout";
 
 function CheckLyric() {
   const navigate = useNavigate();

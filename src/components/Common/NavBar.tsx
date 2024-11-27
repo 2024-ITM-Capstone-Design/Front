@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import KakaoSignUp from "../../assets/kakao-sign-in.svg?react";
-import Logo from "../../assets/logo.png";
+import Logo from "../../assets/logo.webp";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { useAuthStore } from "../../store/useAuthStore";
@@ -41,12 +41,21 @@ function NavBar({ menu }: MenuProps) {
       <Container>
         <img
           src={Logo}
-          alt="logo"
           onClick={() => {
             navigate("/");
           }}
           width={200}
+          alt="logo"
+          loading="lazy"
         />
+        {/* <img
+            src={Logo}
+            alt="logo"
+            onClick={() => {
+              navigate("/");
+            }}
+            width={200}
+          /> */}
       </Container>
 
       <Container>

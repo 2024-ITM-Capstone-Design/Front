@@ -1,6 +1,6 @@
 # 당신의 음악에 맞는 이미지를 AI로 완성, SoundPalette
 
-SoundPalette는 음악 홍보 과정에서 커버 이미지 제작이 필요한 아티스트를 위한 솔루션입니다. AI 기술을 활용해 음악의 분위기와 감정에 어울리는 커버 이미지를 쉽고 빠르게 생성할 수 있도록 지원합니다. 🎨🎵
+SoundPalette는 음악 홍보 과정에서 커버 이미지 제작이 필요한 아티스트를 위한 솔루션입니다. AI 기술을 활용해 음악의 분위기와 감정에 어울리는 커버 이미지를 쉽고 빠르게 생성할 수 있습니다. 🎨
 
 ![alt text](readme_assets/image-1.png)
 
@@ -17,7 +17,7 @@ SoundPalette는 음악 홍보 과정에서 커버 이미지 제작이 필요한 
 ```csharp
  개인 아티스트들의 음원 발매, 홍보 과정에서 자본 부족으로 인해 음악과 어울리는 비주얼 아트를 제작하는 데 겪는 어려움
 ```
-
+<br/>
 ### SoundPalette가 제시하는 솔루션
 
 <aside>
@@ -39,10 +39,12 @@ MFCCs를 사용하여 오디오 신호의 주요 특성 추출하고, 이를 통
 
 gpt-3.5-turbo 모델을 활용해 음악의 내용과 어울리는 주인공의 외모, 성격, 표정 등 세부적인 특징을 생성합니다. 생성된 주인공 특징, 분석된 감정 데이터를 활용하여, gpt-3.5-turbo 모델이 이미지 생성에 적합한 프롬프트를 자동으로 작성 하고, DALL-E 3 모델을 활용하여 프롬프트 기반 이미지 생성을 수행합니다.
 
+<br/>
+
 ## ✔️ 서비스 핵심기능 및 소개
 
 | 웹 화면                                 | 기능                                                                                                                                                                                                                                                                                                     |
-| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ![alt text](readme_assets/login.png)    | **홈/소셜로그인** 사용자는 카카오 소셜 계정을 이용하여 소셜 로그인을 수행하고, 로그인 완료 시, 이미지 생성, 마이페이지 기능을 이용할 수 있습니다.                                                                                                                                                        |
 | ![alt text](readme_assets/select.png)   | **서비스선택** <br/> 사용자는 음악 커버 단일 이미지 생성과 구간별 이미지 생성 서비스 중 원하는 유형을 선택합니다. (복수 선택 가능)                                                                                                                                                                       |
 | ![alt text](readme_assets/detail.png)   | **오디오 파일 업로드 및 세부사항 입력** <br/> 사용자는 이미지를 생성할 노래 제목, 오디오파일, 가사를 입력합니다.                                                                                                                                                                                         |
@@ -53,8 +55,10 @@ gpt-3.5-turbo 모델을 활용해 음악의 내용과 어울리는 주인공의 
 | ![alt text](readme_assets/result.png)   | **이미지 생성 결과 확인**<br/> 노래를 재생해 생성된 이미지가 음악과 어울리는지 확인합니다. 다운로드 버튼을 클릭해 이미지를 다운로드 받을 수 있습니다.                                                                                                                                                    |
 | ![alt text](readme_assets/my.png)       | **마이페이지**<br/> 사용자는 마이페이지에서 이미지 생성이 진행 중인 내역과 완료된 내역을 관리할 수 있습니다. 생성 중인 내역에 대해서는 프로세스를 재개할 수 있고, 완료된 음악에 대해서는 생성된 이미지를 다운로드할 수 있습니다.                                                                         |
 
-## 🛠️ Stacks
+<br/>
 
+## 🛠️ Stacks
+<div>
  <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black">
   <img src="https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=typescript&logoColor=white"> 
      <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=flat-square&logo=Tailwind CSS&logoColor=white"/>
@@ -63,6 +67,7 @@ gpt-3.5-turbo 모델을 활용해 음악의 내용과 어울리는 주인공의 
      <img src="https://img.shields.io/badge/Zustand-000000?style=flat-square&logo=&logoColor=white">
      <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white">
  <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white">
+</div>
 
 **`React`**
 
@@ -114,15 +119,17 @@ gpt-3.5-turbo 모델을 활용해 음악의 내용과 어울리는 주인공의 
 - Vercel은 빠르고 간편한 배포 환경을 제공하며, CI/CD 워크플로를 자동화합니다.
 - 글로벌 CDN을 통해 최적화된 성능과 낮은 응답 시간을 보장합니다.
 - 서버리스 함수와 정적 콘텐츠 배포를 손쉽게 지원해 개발과 배포 속도를 동시에 높입니다.
+<br/>
 
 ## Information Architecture
 
 ![alt text](readme_assets/image-6.png)
+<br/>
 
 ## 🌐 System Architecture
 
 ![alt text](readme_assets/image.png)
-
+<br/>
 ## 💫 특이사항
 
 ### 웹 성능 최적화
